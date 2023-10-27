@@ -17,23 +17,44 @@ public class PostEntity {
     @Column(name="descriptions")
     private String descriptions;
 
-    @Column(name="name")
-    private String name;
-
     @Column(name="poststatus")
     private String poststatus;
 
     @ManyToOne()
     @JoinColumn(name = "user_id")
     UserEntity user;
+
+    @ManyToOne()
+    @JoinColumn(name = "category_id")
+    CategoryEntity category ;
     @OneToMany(mappedBy ="post")
     Set<CommentEntity> comments;
 
     @OneToMany(mappedBy ="posts")
     Set<ShareEntity> share;
 
+    public CategoryEntity getCategory() {
+        return category;
+    }
+
+    public void setCategory(CategoryEntity category) {
+        this.category = category;
+    }
+
     @OneToMany(mappedBy ="posts")
     Set<LikeEntity> like;
+
+    public PostEntity(int id, String title, String descriptions, String poststatus, UserEntity user, Set<CommentEntity> comments, Set<ShareEntity> share, Set<LikeEntity> like) {
+        this.id = id;
+        this.title = title;
+        this.descriptions = descriptions;
+
+        this.poststatus = poststatus;
+        this.user = user;
+        this.comments = comments;
+        this.share = share;
+        this.like = like;
+    }
 
     public Set<LikeEntity> getLike() {
         return like;
@@ -83,13 +104,7 @@ public class PostEntity {
         this.descriptions = descriptions;
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getPoststatus() {
         return poststatus;
@@ -110,12 +125,5 @@ public class PostEntity {
     public PostEntity() {
     }
 
-    public PostEntity(int id, String title, String descriptions, String name, String poststatus, UserEntity user) {
-        this.id = id;
-        this.title = title;
-        this.descriptions = descriptions;
-        this.name = name;
-        this.poststatus = poststatus;
-        this.user = user;
-    }
+
 }
