@@ -29,6 +29,28 @@ public class PostEntity {
     @OneToMany(mappedBy ="post")
     Set<CommentEntity> comments;
 
+    @OneToMany(mappedBy ="posts")
+    Set<ShareEntity> share;
+
+    @OneToMany(mappedBy ="posts")
+    Set<LikeEntity> like;
+
+    public Set<LikeEntity> getLike() {
+        return like;
+    }
+
+    public void setLike(Set<LikeEntity> like) {
+        this.like = like;
+    }
+
+    public Set<ShareEntity> getShare() {
+        return share;
+    }
+
+    public void setShare(Set<ShareEntity> share) {
+        this.share = share;
+    }
+
     public Set<CommentEntity> getComments() {
         return comments;
     }
