@@ -60,6 +60,7 @@ public class UserService implements UserServiceImp {
                 user.setId(item.getId());
                 user.setName(item.getUsername());
                 user.setRoleId(item.getRole().getId());
+                user.setEmail(item.getEmail());
                 listUser.add(user);
             }
             return listUser;
