@@ -30,6 +30,28 @@ public class UserEntity {
     Set<PostEntity> posts;
     @OneToMany(mappedBy ="user")
     Set<CommentEntity> comment;
+
+    @OneToMany(mappedBy ="user")
+    Set<ShareEntity> share;
+    @OneToMany(mappedBy ="user")
+    Set<LikeEntity> like;
+
+    public Set<LikeEntity> getLike() {
+        return like;
+    }
+
+    public void setLike(Set<LikeEntity> like) {
+        this.like = like;
+    }
+
+    public Set<ShareEntity> getShare() {
+        return share;
+    }
+
+    public void setShare(Set<ShareEntity> share) {
+        this.share = share;
+    }
+
     public Set<CommentEntity> getComment() {
         return comment;
     }
