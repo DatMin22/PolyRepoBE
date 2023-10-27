@@ -1,5 +1,5 @@
-package com.PolyRepo.PolyRepo.repository;
-
-public interface ForgotPassRepository {
-
-}
+//package com.PolyRepo.PolyRepo.repository;
+//
+//public interface ForgotPassRepository {
+//
+//}
