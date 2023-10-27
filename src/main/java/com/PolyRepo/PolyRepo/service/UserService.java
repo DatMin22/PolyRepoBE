@@ -3,12 +3,17 @@ package com.PolyRepo.PolyRepo.service;
 
 import com.PolyRepo.PolyRepo.Entity.RoleEntity;
 import com.PolyRepo.PolyRepo.Entity.UserEntity;
+import com.PolyRepo.PolyRepo.exception.CustomException;
 import com.PolyRepo.PolyRepo.payload.request.SignupRequest;
+import com.PolyRepo.PolyRepo.payload.response.UserResponse;
 import com.PolyRepo.PolyRepo.repository.UserRepository;
 import com.PolyRepo.PolyRepo.service.imp.UserServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService implements UserServiceImp {
@@ -42,5 +47,24 @@ public class UserService implements UserServiceImp {
 
 
         return isSuccess;
+    }
+
+    @Override
+    public List<UserResponse> getAllUser() {
+        try {
+            List<UserResponse> listUser = new ArrayList<>();
+            List<UserEntity> userEntityList = userRepository.findAll();
+            for (UserEntity item :
+                    userEntityList) {
+                UserResponse user = new UserResponse();
+                user.setId(item.getId());
+                user.setName(item.getUsername());
+                user.setRoleId(item.getRole().getId());
+                listUser.add(user);
+            }
+            return listUser;
+        } catch (Exception e) {
+            throw new CustomException("Lỗi add user " + e.getMessage());
+        }
     }
 }
