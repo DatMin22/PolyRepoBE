@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin("*")
+@CrossOrigin
 public class UserController {
     @Autowired
     UserServiceImp userServiceImp;
@@ -25,5 +25,13 @@ public class UserController {
         baseResponse.setStatusCode(200);
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }
+//    @GetMapping("/login")
+//    public ResponseEntity<?> login() {
+//        BaseResponse baseResponse = new BaseResponse();
+//        baseResponse.setData(userServiceImp.getAllUser());
+//        baseResponse.setMessage("Get All User");
+//        baseResponse.setStatusCode(200);
+//        return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+//    }
 }
-//abc
+
