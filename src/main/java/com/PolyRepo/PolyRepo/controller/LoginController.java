@@ -11,13 +11,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
+@RequestMapping("/")
+@CrossOrigin("*")
+
 public class LoginController {
 
     @Autowired
@@ -36,13 +36,11 @@ public class LoginController {
         "data" : kiểu gì cũng được
      }
      */
-    @RequestMapping("/")
-    public String a(){
-        return "aa";
-    }
 
-    @RequestMapping(value = "/signin",method = RequestMethod.POST)
+
+    @RequestMapping(value = "signin",method = RequestMethod.POST)
     public ResponseEntity<?> signin(
+
             @RequestParam String email, @RequestParam String password){
 
         UsernamePasswordAuthenticationToken token =
@@ -57,7 +55,7 @@ public class LoginController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/signup",method = RequestMethod.POST)
+    @RequestMapping(value = "signup",method = RequestMethod.POST)
     public ResponseEntity<?> signup(@Valid SignupRequest request){
         boolean isSuccess = userServiceImp.addUser(request);
 
