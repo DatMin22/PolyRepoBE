@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("a")
+@RequestMapping("/")
 @CrossOrigin("*")
 
 public class LoginController {
@@ -38,7 +38,7 @@ public class LoginController {
      */
 
 
-    @RequestMapping(value = "/signin",method = RequestMethod.POST)
+    @RequestMapping(value = "signin",method = RequestMethod.POST)
     public ResponseEntity<?> signin(
 
             @RequestParam String email, @RequestParam String password){
@@ -55,7 +55,7 @@ public class LoginController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/signup",method = RequestMethod.POST)
+    @RequestMapping(value = "signup",method = RequestMethod.POST)
     public ResponseEntity<?> signup(@Valid SignupRequest request){
         boolean isSuccess = userServiceImp.addUser(request);
 
