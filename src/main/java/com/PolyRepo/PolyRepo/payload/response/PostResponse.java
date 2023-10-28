@@ -2,10 +2,19 @@ package com.PolyRepo.PolyRepo.payload.response;
 
 public class PostResponse {
     private int id;
-    private String postId;
     private int userId;
-    private String content;
-    private Boolean commentStatus;
+    private String description;
+    private String title;
+
+    private String postStatus;
+
+    public String getPostStatus() {
+        return postStatus;
+    }
+
+    public void setPostStatus(String postStatus) {
+        this.postStatus = postStatus;
+    }
 
     public int getId() {
         return id;
@@ -15,13 +24,7 @@ public class PostResponse {
         this.id = id;
     }
 
-    public String getPostId() {
-        return postId;
-    }
-
-    public void setPostId(String postId) {
-        this.postId = postId;
-    }
+  
 
     public int getUserId() {
         return userId;
@@ -31,19 +34,19 @@ public class PostResponse {
         this.userId = userId;
     }
 
-    public String getContent() {
-        return content;
+    public String getDescription() {
+        return description;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public Boolean getCommentStatus() {
-        return commentStatus;
+    public String getTitle() {
+        return title;
     }
 
-    public void setCommentStatus(Boolean commentStatus) {
-        this.commentStatus = commentStatus;
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

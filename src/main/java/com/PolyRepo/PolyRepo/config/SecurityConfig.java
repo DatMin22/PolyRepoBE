@@ -59,7 +59,10 @@ public class SecurityConfig {
 //                .and()
 //                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
 
-                .requestMatchers("signin","signup","user/**","/share/**").permitAll()
+
+                .requestMatchers("signin","signup","user/**","/share/**","/uploadfile/**","/downloadfile/**","/posts/**").permitAll()
+
+
                 .anyRequest().authenticated()
                 .and().addFilterBefore(jwtFilter,UsernamePasswordAuthenticationFilter.class)
                 .build();
