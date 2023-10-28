@@ -17,11 +17,27 @@ public class CommentEntity {
 
     @ManyToOne()
     @JoinColumn(name = "post_id")
-    PostEntity post;
+    private PostEntity post;
 
     @ManyToOne()
     @JoinColumn(name = "user_id")
-    UserEntity user;
+    private UserEntity user;
+
+    public void setPost(PostEntity post) {
+        this.post = post;
+    }
+
+    public PostEntity getPost() {
+        return post;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
 
     public int getId() {
         return id;
@@ -47,30 +63,14 @@ public class CommentEntity {
         this.commentstatus = commentstatus;
     }
 
-    public PostEntity getPost() {
-        return post;
-    }
-
-    public void setPost(PostEntity post) {
-        this.post = post;
-    }
-
-    public UserEntity getUser() {
-        return user;
-    }
-
-    public void setUser(UserEntity user) {
-        this.user = user;
-    }
-
-    public CommentEntity() {
-    }
-
     public CommentEntity(int id, String content, String commentstatus, PostEntity post, UserEntity user) {
         this.id = id;
         this.content = content;
         this.commentstatus = commentstatus;
         this.post = post;
         this.user = user;
+    }
+
+    public CommentEntity() {
     }
 }
