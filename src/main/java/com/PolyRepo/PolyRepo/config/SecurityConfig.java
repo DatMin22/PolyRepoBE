@@ -58,11 +58,8 @@ public class SecurityConfig {
 //                .anyRequest().authenticated() //Tất cả các link còn lại đều phải chứng thực
 //                .and()
 //                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-<<<<<<< HEAD
-                .requestMatchers("signin","signup","user/**").permitAll()
-=======
-                .requestMatchers("/signin","signup","/share/**").permitAll()
->>>>>>> ThanhTuan
+
+                .requestMatchers("signin","signup","user/**","/share/**").permitAll()
                 .anyRequest().authenticated()
                 .and().addFilterBefore(jwtFilter,UsernamePasswordAuthenticationFilter.class)
                 .build();
