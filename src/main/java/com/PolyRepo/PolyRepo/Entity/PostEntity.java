@@ -17,9 +17,6 @@ public class PostEntity {
     @Column(name="descriptions")
     private String descriptions;
 
-    @Column(name="name")
-    private String name;
-
     @Column(name="poststatus")
     private String poststatus;
 
@@ -83,14 +80,6 @@ public class PostEntity {
         this.descriptions = descriptions;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getPoststatus() {
         return poststatus;
     }
@@ -110,11 +99,10 @@ public class PostEntity {
     public PostEntity() {
     }
 
-    public PostEntity(int id, String title, String descriptions, String name, String poststatus, UserEntity user) {
+    public PostEntity(int id, String title, String descriptions, String poststatus, UserEntity user) {
         this.id = id;
         this.title = title;
         this.descriptions = descriptions;
-        this.name = name;
         this.poststatus = poststatus;
         this.user = user;
     }

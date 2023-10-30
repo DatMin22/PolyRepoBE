@@ -20,16 +20,16 @@ public class UserEntity {
     @Column(name="email")
     private String email;
 
-    @Column(name="ResetCode")
-    private int ResetCode;
+//    @Column(name="ResetCode")
+//    private int ResetCode;
 
-    public int getResetCode() {
-        return ResetCode;
-    }
-
-    public void setResetCode(int resetCode) {
-        ResetCode = resetCode;
-    }
+//    public int getResetCode() {
+//        return ResetCode;
+//    }
+//
+//    public void setResetCode(int resetCode) {
+//        ResetCode = resetCode;
+//    }
 
     @ManyToOne()
     @JoinColumn(name = "role_id")

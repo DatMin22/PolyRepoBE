@@ -21,17 +21,18 @@ public class ShareService implements ShareServiceImp {
     @Override
     public List<ShareResponse> getAllShare() {
         try {
-            List<ShareResponse> listUser = new ArrayList<>();
+            List<ShareResponse> listShare = new ArrayList<>();
             List<ShareEntity> shareEntityList = shareRepository.findAll();
             for (ShareEntity item :
                     shareEntityList) {
                 ShareResponse share = new ShareResponse();
-                share.setUser(item.getUsers().getId());
-                share.setPosts(item.getPosts().getId());
-
-                listUser.add(share);
+                share.setId(item.getId());
+                share.setUser_id(item.getUser().getId());
+                share.setPost_id(item.getPosts().getId());;
+                share.setShareStatus(item.getShareStatus());
+                listShare.add(share);
             }
-            return listUser;
+            return listShare;
         } catch (Exception e) {
             throw new CustomException("Lỗi share " + e.getMessage());
         }
