@@ -1,9 +1,14 @@
 package com.PolyRepo.PolyRepo.service;
 
 import com.PolyRepo.PolyRepo.Entity.CommentEntity;
+import com.PolyRepo.PolyRepo.Entity.PostEntity;
+import com.PolyRepo.PolyRepo.Entity.UserEntity;
 import com.PolyRepo.PolyRepo.exception.CustomException;
+import com.PolyRepo.PolyRepo.payload.request.CommentRequest;
 import com.PolyRepo.PolyRepo.payload.response.CommentResponse;
 import com.PolyRepo.PolyRepo.repository.CommentRepository;
+import com.PolyRepo.PolyRepo.repository.PostRepository;
+import com.PolyRepo.PolyRepo.repository.UserRepository;
 import com.PolyRepo.PolyRepo.service.imp.CommentServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +20,13 @@ import java.util.List;
 public class CommentService implements CommentServiceImp {
     @Autowired
     private  CommentRepository commentRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private PostRepository postRepository;
+
 
     @Override
     public List<CommentResponse> getAllComments() {
@@ -36,4 +48,42 @@ public class CommentService implements CommentServiceImp {
         }
     }
 
+    @Override
+    public CommentResponse addComment(CommentRequest commentRequest) {
+        try {
+            CommentEntity commentEntity = new CommentEntity();
+            commentEntity.setContent(commentRequest.getContent());
+            commentEntity.setCommentstatus(commentRequest.getCommentstatus());
+
+            // Tìm đối tượng PostEntity từ cơ sở dữ liệu
+            PostEntity postEntity = postRepository.findById(commentRequest.getPost_id())
+                    .orElseThrow(() -> new CustomException("Không tìm thấy bài viết với ID: " + commentRequest.getPost_id()));
+            commentEntity.setPost(postEntity);
+
+            // Tìm đối tượng UserEntity từ cơ sở dữ liệu
+            UserEntity userEntity = userRepository.findById(commentRequest.getUser_id())
+                    .orElseThrow(() -> new CustomException("Không tìm thấy người dùng với ID: " + commentRequest.getUser_id()));
+            commentEntity.setUser(userEntity);
+
+            CommentEntity savedComment = commentRepository.save(commentEntity);
+
+            CommentResponse commentResponse = new CommentResponse();
+            commentResponse.setId(savedComment.getId()); // Đặt giá trị cho thuộc tính id
+            commentResponse.setContent(savedComment.getContent());
+            commentResponse.setCommentstatus(savedComment.getCommentstatus());
+            commentResponse.setPost_id(savedComment.getPost().getId());
+            commentResponse.setUser_id(savedComment.getUser().getId());
+
+            return commentResponse;
+        } catch (Exception e) {
+            throw new CustomException("Lỗi " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void deleteCommentById(Integer id) {
+        CommentEntity commentEntity = commentRepository.findById(id)
+                .orElseThrow(() -> new CustomException("Không tìm thấy comment với ID: " + id));
+        commentRepository.delete(commentEntity);
+    }
 }

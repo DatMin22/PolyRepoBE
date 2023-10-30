@@ -1,11 +1,16 @@
 package com.PolyRepo.PolyRepo.service;
 
 
+import com.PolyRepo.PolyRepo.Entity.CommentEntity;
+import com.PolyRepo.PolyRepo.Entity.PostEntity;
 import com.PolyRepo.PolyRepo.Entity.RoleEntity;
 import com.PolyRepo.PolyRepo.Entity.UserEntity;
 import com.PolyRepo.PolyRepo.exception.CustomException;
+import com.PolyRepo.PolyRepo.payload.request.CommentRequest;
 import com.PolyRepo.PolyRepo.payload.request.SignupRequest;
+import com.PolyRepo.PolyRepo.payload.response.CommentResponse;
 import com.PolyRepo.PolyRepo.payload.response.UserResponse;
+import com.PolyRepo.PolyRepo.repository.CommentRepository;
 import com.PolyRepo.PolyRepo.repository.UserRepository;
 import com.PolyRepo.PolyRepo.service.imp.UserServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +28,8 @@ public class UserService implements UserServiceImp {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-
+    @Autowired
+    private CommentRepository commentRepository;
 
 
     @Override
@@ -67,4 +73,7 @@ public class UserService implements UserServiceImp {
             throw new CustomException("Lỗi add user " + e.getMessage());
         }
     }
+
+
+
 }
