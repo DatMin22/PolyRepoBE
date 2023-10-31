@@ -1,20 +1,14 @@
 package com.PolyRepo.PolyRepo.controller;
 
-import com.PolyRepo.PolyRepo.Entity.CommentEntity;
 import com.PolyRepo.PolyRepo.exception.CustomException;
 import com.PolyRepo.PolyRepo.payload.request.CommentRequest;
 import com.PolyRepo.PolyRepo.payload.response.BaseResponse;
 import com.PolyRepo.PolyRepo.payload.response.CommentResponse;
-import com.PolyRepo.PolyRepo.service.CommentService;
 import com.PolyRepo.PolyRepo.service.imp.CommentServiceImp;
-import com.PolyRepo.PolyRepo.service.imp.UserServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/comment")
@@ -23,7 +17,7 @@ public class CommentController {
 
     @Autowired
     CommentServiceImp commentServiceImp;
-    @GetMapping("/all")
+    @GetMapping("/getAll")
     public ResponseEntity<?> getAllComments() {
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setData(commentServiceImp.getAllComments());
@@ -48,7 +42,7 @@ public class CommentController {
             return new ResponseEntity<>(baseResponse, HttpStatus.BAD_REQUEST);
         }
     }
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteCommentById(@PathVariable("id") Integer id) {
         BaseResponse baseResponse = new BaseResponse();
         try {

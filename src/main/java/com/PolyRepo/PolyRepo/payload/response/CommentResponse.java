@@ -1,8 +1,5 @@
 package com.PolyRepo.PolyRepo.payload.response;
 
-import com.PolyRepo.PolyRepo.Entity.PostEntity;
-import com.PolyRepo.PolyRepo.Entity.UserEntity;
-
 public class CommentResponse {
     private int id;
     private String content;

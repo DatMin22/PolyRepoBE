@@ -19,7 +19,7 @@ import java.util.List;
 @Service
 public class CommentService implements CommentServiceImp {
     @Autowired
-    private  CommentRepository commentRepository;
+    private CommentRepository commentRepository;
 
     @Autowired
     private UserRepository userRepository;

@@ -37,11 +37,7 @@ public class SecurityConfig {
                 .build();
     }
 
-    /**
-     * /admin/save : ADMIN hoặc SAVE
-     * /admin/delete : DELETE
-     * JWT
-     */
+
 
 //    Đầy là filter dùng để custom rule liên quan tới link hoặc
 //    cấu hình của security
@@ -58,8 +54,11 @@ public class SecurityConfig {
 //                .anyRequest().authenticated() //Tất cả các link còn lại đều phải chứng thực
 //                .and()
 //                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-                .requestMatchers("/signin","signup","user/**","comment/**").permitAll()
 
+//                .requestMatchers("/signin","/signup","/uploadfile/**","/downloadfile/**","/posts/**","/user/**").permitAll()
+
+                .requestMatchers("/signin","/signup","/uploadfile/**","/downloadfile/**","/posts/**","/user/**","/cate/**","comment/**").permitAll()
+//>>>>>>> 69eddf533d2b20a936dcd79ba8268af4c0bed0e9
                 .anyRequest().authenticated()
                 .and().addFilterBefore(jwtFilter,UsernamePasswordAuthenticationFilter.class)
                 .build();
