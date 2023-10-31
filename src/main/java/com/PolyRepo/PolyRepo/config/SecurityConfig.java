@@ -37,11 +37,7 @@ public class SecurityConfig {
                 .build();
     }
 
-    /**
-     * /admin/save : ADMIN hoặc SAVE
-     * /admin/delete : DELETE
-     * JWT
-     */
+
 
 //    Đầy là filter dùng để custom rule liên quan tới link hoặc
 //    cấu hình của security

@@ -20,6 +20,17 @@ public class PostEntity {
     @Column(name="poststatus")
     private String poststatus;
 
+    @Column(name="filename")
+    private String filename;
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
     @ManyToOne()
     @JoinColumn(name = "user_id")
     UserEntity user;

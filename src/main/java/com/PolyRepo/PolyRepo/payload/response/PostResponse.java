@@ -8,6 +8,16 @@ public class PostResponse {
     private int categoryId;
     private String postStatus;
 
+    private String filename;
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
     public int getCategoryId() {
         return categoryId;
     }

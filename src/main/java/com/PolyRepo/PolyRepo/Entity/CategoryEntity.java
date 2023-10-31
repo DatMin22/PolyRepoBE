@@ -38,4 +38,7 @@ public class CategoryEntity {
     public void setPosts(Set<PostEntity> posts) {
         this.posts = posts;
     }
+
+    public CategoryEntity() {
+    }
 }

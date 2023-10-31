@@ -41,6 +41,7 @@ public class PostService implements PostServiceImp {
                 post.setUserId(item.getUser().getId());
                 post.setCategoryId(item.getCategory().getId());
                 post.setPostStatus(item.getPoststatus());
+                post.setFilename(item.getFilename());
                 listPost.add(post);
             }
             return listPost;
@@ -55,12 +56,12 @@ public class PostService implements PostServiceImp {
 
         try {
             PostEntity postEntity = new PostEntity();
-            postEntity.setTitle(postEntity.getTitle());
-            postEntity.setDescriptions(postEntity.getDescriptions());
+            postEntity.setTitle(postRequest.getTitle());
+            postEntity.setDescriptions(postRequest.getDescription());
             postEntity.setPoststatus("true");
             // Tìm đối tượng PostEntity từ cơ sở dữ liệu
             CategoryEntity category= cateRepository.findById(postRequest.getCategory_id())
-                    .orElseThrow(() -> new CustomException("Không tìm thấy cate bài viết với ID: " + postRequest.getCategory_id()));
+                   ;
             postEntity.setCategory(category);
 
             // Tìm đối tượng UserEntity từ cơ sở dữ liệu
@@ -72,13 +73,14 @@ public class PostService implements PostServiceImp {
             postResponse.setId(savedPost.getId()); // Đặt giá trị cho thuộc tính id
             postResponse.setTitle(savedPost.getTitle());
             postResponse.setDescription(savedPost.getDescriptions());
+            postResponse.setPostStatus(savedPost.getPoststatus());
             postResponse.setCategoryId(savedPost.getCategory().getId());
             postResponse.setUserId(savedPost.getUser().getId());
-            return postResponse;
-        } catch (Exception e) {
-            throw new CustomException("Lỗi " + e.getMessage());
-
-        }
+                return postResponse;
+            } catch (Exception e) {
+                throw new CustomException("Lỗi " + e.getMessage());
+    
+            }
     }
 
 }
