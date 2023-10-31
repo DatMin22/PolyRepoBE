@@ -3,12 +3,12 @@ package com.PolyRepo.PolyRepo.Entity;
 import jakarta.persistence.*;
 
 @Entity(name = "likes")
-
 public class LikeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
+    @Column(name="likestatus")
+    private String likestatus;
 
     @ManyToOne()
     @JoinColumn(name = "user_id")
@@ -17,8 +17,7 @@ public class LikeEntity {
     @JoinColumn(name = "post_id")
     PostEntity posts;
 
-    @Column(name="LikeStatus")
-    private Boolean likeStatus;
+
 
     public int getId() {
         return id;
@@ -44,11 +43,11 @@ public class LikeEntity {
         this.posts = posts;
     }
 
-    public Boolean getLikeStatus() {
-        return likeStatus;
+    public String getLikeStatus() {
+        return likestatus;
     }
 
-    public void setLikeStatus(Boolean likeStatus) {
-        this.likeStatus = likeStatus;
+    public void setLikeStatus(String likeStatus) {
+        likestatus = likeStatus;
     }
 }

@@ -6,6 +6,8 @@ import com.PolyRepo.PolyRepo.payload.response.BaseResponse;
 import com.PolyRepo.PolyRepo.payload.response.PostResponse;
 import com.PolyRepo.PolyRepo.service.imp.PostServiceImp;
 import com.PolyRepo.PolyRepo.service.imp.UserServiceImp;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,5 +44,24 @@ public class PostController {
             baseResponse.setStatusCode(400);
             return new ResponseEntity<>(baseResponse, HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?>getPostById(@PathVariable int id){
+
+    BaseResponse response=new BaseResponse();
+    response.setStatusCode(200);
+    response.setData(postServiceImp.getPostByID(id));
+    response.setMessage("Post By ID success");
+    return new ResponseEntity<>(response , HttpStatus.OK);
+}
+
+    @GetMapping("/category/{id}")
+    public ResponseEntity<?>getProductByCategory(@PathVariable int id){
+        BaseResponse response=new BaseResponse();
+        response.setStatusCode(200);
+        response.setData(postServiceImp.getPostByCateId(id));
+
+        return new ResponseEntity<>(response , HttpStatus.OK);
     }
 }

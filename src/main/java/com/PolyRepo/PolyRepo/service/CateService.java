@@ -51,18 +51,25 @@ public class CateService implements CateServiceImp {
 
         }
     }
+
     @Override
-    public boolean deletecate(int Id) {
-        boolean isSuccess = false;
-        try {
-            System.out.println("timid");
-            CategoryEntity cate = cateRepository.findById(Id);
-            cateRepository.delete(cate);
-            isSuccess = true;
-        } catch (Exception e) {
-            throw new CustomException("Lỗi delete category " + e.getMessage());
-        }
-        return isSuccess;
+    public void deleteCatetById(Integer id) {
+        CategoryEntity category = cateRepository.findById(id)
+                .orElseThrow(() -> new CustomException("Không tìm thấy cate với ID: " + id));
+        cateRepository.delete(category);
     }
+//    @Override
+//    public boolean deletecate(int id) {
+//        boolean isSuccess = false;
+//        try {
+//
+//            CategoryEntity cate = cateRepository.findById(id);
+//            cateRepository.delete(cate);
+//            isSuccess = true;
+//        } catch (Exception e) {
+//            throw new CustomException("Lỗi delete category " + e.getMessage());
+//        }
+//        return isSuccess;
+//    }
 
 }
