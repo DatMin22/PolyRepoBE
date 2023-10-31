@@ -32,6 +32,18 @@ public class PostEntity {
     @OneToMany(mappedBy ="posts")
     Set<LikeEntity> like;
 
+    public PostEntity(int id, String title, String descriptions, String poststatus, UserEntity user, Set<CommentEntity> comments, Set<ShareEntity> share, Set<LikeEntity> like) {
+        this.id = id;
+        this.title = title;
+        this.descriptions = descriptions;
+
+        this.poststatus = poststatus;
+        this.user = user;
+        this.comments = comments;
+        this.share = share;
+        this.like = like;
+    }
+
     public Set<LikeEntity> getLike() {
         return like;
     }
@@ -80,6 +92,7 @@ public class PostEntity {
         this.descriptions = descriptions;
     }
 
+
     public String getPoststatus() {
         return poststatus;
     }
@@ -106,4 +119,5 @@ public class PostEntity {
         this.poststatus = poststatus;
         this.user = user;
     }
+
 }

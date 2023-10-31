@@ -18,7 +18,7 @@ public class ShareController {
     @Autowired
     ShareServiceImp shareServiceImp;
 
-    @GetMapping("/all")
+    @GetMapping("/getall")
     public ResponseEntity<?> getAllShare() {
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setData(shareServiceImp.getAllShare());
