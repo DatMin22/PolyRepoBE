@@ -94,4 +94,42 @@ public class PostService implements PostServiceImp {
             }
     }
 
+
+
+    @Override
+    public List<PostResponse> getPostByID(int id) {
+        List<PostEntity>list=postRepository.findById(id);
+        List<PostResponse> listResponse=new ArrayList<>();
+        for (PostEntity data: list){
+            PostResponse postResponse=new PostResponse();
+            postResponse.setId(data.getId());
+            postResponse.setCategoryId(data.getCategory().getId());
+            postResponse.setUserId(data.getUser().getId());
+            postResponse.setPostStatus(data.getPoststatus());
+            postResponse.setTitle(data.getTitle());
+            postResponse.setFilename(data.getFilename());
+            listResponse.add(postResponse);
+        }
+        return listResponse;
+    }
+
+    @Override
+    public List<PostResponse> getPostByCateId(int id) {
+        List<PostEntity>list=postRepository.findByCategoryId(id);
+        List<PostResponse> listResponse=new ArrayList<>();
+        for (PostEntity data: list){
+            PostResponse postResponse=new PostResponse();
+            postResponse.setId(data.getId());
+            postResponse.setTitle(data.getTitle());
+            postResponse.setDescription(data.getDescriptions());
+            postResponse.setUserId(data.getUser().getId());
+            postResponse.setCategoryId(data.getCategory().getId());
+            postResponse.setFilename(data.getFilename());
+            postResponse.setPostStatus(data.getPoststatus());
+            listResponse.add(postResponse);
+        }
+        return listResponse;
+    }
+
+
 }

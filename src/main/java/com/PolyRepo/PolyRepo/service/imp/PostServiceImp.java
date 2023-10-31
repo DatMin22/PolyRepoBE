@@ -15,5 +15,9 @@ public interface PostServiceImp {
     List<PostResponse> getAllPost();
 
     PostResponse addPost(PostRequest postRequest);
+//   List <PostResponse> getByCateId(int id);
+List<PostResponse> getPostByID(int id);
+    List<PostResponse> getPostByCateId(int id);
+
 }
 
