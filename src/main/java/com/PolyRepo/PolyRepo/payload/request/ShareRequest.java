@@ -1,8 +1,6 @@
 package com.PolyRepo.PolyRepo.payload.request;
 
 public class ShareRequest {
-
-    private int id;
     private int post_id;
     private int user_id;
     private Boolean ShareStatus;
@@ -10,19 +8,10 @@ public class ShareRequest {
     public ShareRequest() {
     }
 
-    public ShareRequest(int id, int post_id, int user_id, Boolean shareStatus) {
-        this.id = id;
+    public ShareRequest( int post_id, int user_id, Boolean shareStatus) {
         this.post_id = post_id;
         this.user_id = user_id;
         ShareStatus = shareStatus;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public int getPost_id() {
