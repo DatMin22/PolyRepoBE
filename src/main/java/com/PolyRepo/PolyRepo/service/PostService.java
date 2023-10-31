@@ -59,6 +59,7 @@ public class PostService implements PostServiceImp {
             postEntity.setTitle(postRequest.getTitle());
             postEntity.setDescriptions(postRequest.getDescription());
             postEntity.setPoststatus("true");
+            postEntity.setFilename(postRequest.getFilename());
             // Tìm đối tượng PostEntity từ cơ sở dữ liệu
             CategoryEntity category= cateRepository.findById(postRequest.getCategory_id())
                    ;
@@ -74,6 +75,7 @@ public class PostService implements PostServiceImp {
             postResponse.setTitle(savedPost.getTitle());
             postResponse.setDescription(savedPost.getDescriptions());
             postResponse.setPostStatus(savedPost.getPoststatus());
+            postResponse.setFilename(savedPost.getFilename());
             postResponse.setCategoryId(savedPost.getCategory().getId());
             postResponse.setUserId(savedPost.getUser().getId());
                 return postResponse;

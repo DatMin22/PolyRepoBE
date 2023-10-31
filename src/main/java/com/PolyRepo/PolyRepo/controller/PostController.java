@@ -33,7 +33,7 @@ public class PostController {
         try {
             PostResponse postResponse= postServiceImp.addPost(postRequest);
             baseResponse.setData(postResponse);
-            baseResponse.setMessage("Comment added successfully");
+            baseResponse.setMessage("Posts added successfully");
             baseResponse.setStatusCode(200);
             return new ResponseEntity<>(baseResponse, HttpStatus.OK);
         } catch (CustomException e) {

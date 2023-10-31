@@ -6,7 +6,21 @@ private String description;
 private String poststatus;
 private int user_id;
 
-private int category_id;
+private String filename;
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
+    public void setCategory_id(int category_id) {
+        this.category_id = category_id;
+    }
+
+    private int category_id;
 
 
     public String getTitle() {
