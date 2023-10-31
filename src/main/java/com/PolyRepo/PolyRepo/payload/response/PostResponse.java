@@ -6,7 +6,27 @@ public class PostResponse {
     private String description;
     private String title;
 
+
+    private int categoryId;
     private String postStatus;
+
+    private String filename;
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
 
     public String getPostStatus() {
         return postStatus;
@@ -24,7 +44,7 @@ public class PostResponse {
         this.id = id;
     }
 
-  
+
 
     public int getUserId() {
         return userId;

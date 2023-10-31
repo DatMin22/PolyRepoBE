@@ -20,14 +20,37 @@ public class PostEntity {
     @Column(name="poststatus")
     private String poststatus;
 
+    @Column(name="filename")
+    private String filename;
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
     @ManyToOne()
     @JoinColumn(name = "user_id")
     UserEntity user;
+
+    @ManyToOne()
+    @JoinColumn(name = "category_id")
+    CategoryEntity category ;
     @OneToMany(mappedBy ="post")
     Set<CommentEntity> comments;
 
     @OneToMany(mappedBy ="posts")
     Set<ShareEntity> share;
+
+    public CategoryEntity getCategory() {
+        return category;
+    }
+
+    public void setCategory(CategoryEntity category) {
+        this.category = category;
+    }
 
     @OneToMany(mappedBy ="posts")
     Set<LikeEntity> like;
