@@ -9,7 +9,9 @@ import java.util.List;
 @Service
 public interface CommentServiceImp {
     List<CommentResponse> getAllComments();
+    CommentResponse getCommentById(Integer id);
     CommentResponse addComment(CommentRequest commentRequest);
     void deleteCommentById(Integer id);
     CommentResponse updateComment(Integer id, String content);
+
 }

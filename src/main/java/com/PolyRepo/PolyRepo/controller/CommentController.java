@@ -26,6 +26,12 @@ public class CommentController {
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }
 
+
+    @GetMapping("/{id}")
+    public CommentResponse getCommentById(@PathVariable int id) {
+        return commentServiceImp.getCommentById(id);
+    }
+
     @PostMapping("/add")
     public ResponseEntity<?> addComment(@RequestBody CommentRequest commentRequest) {
         BaseResponse baseResponse = new BaseResponse();
