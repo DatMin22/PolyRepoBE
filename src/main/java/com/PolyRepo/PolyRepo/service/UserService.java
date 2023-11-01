@@ -1,14 +1,10 @@
 package com.PolyRepo.PolyRepo.service;
 
 
-import com.PolyRepo.PolyRepo.Entity.CommentEntity;
-import com.PolyRepo.PolyRepo.Entity.PostEntity;
 import com.PolyRepo.PolyRepo.Entity.RoleEntity;
 import com.PolyRepo.PolyRepo.Entity.UserEntity;
 import com.PolyRepo.PolyRepo.exception.CustomException;
-import com.PolyRepo.PolyRepo.payload.request.CommentRequest;
 import com.PolyRepo.PolyRepo.payload.request.SignupRequest;
-import com.PolyRepo.PolyRepo.payload.response.CommentResponse;
 import com.PolyRepo.PolyRepo.payload.response.UserResponse;
 import com.PolyRepo.PolyRepo.repository.CommentRepository;
 import com.PolyRepo.PolyRepo.repository.UserRepository;
@@ -28,8 +24,7 @@ public class UserService implements UserServiceImp {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-    @Autowired
-    private CommentRepository commentRepository;
+
 
 
     @Override
@@ -75,6 +70,21 @@ public class UserService implements UserServiceImp {
         }
     }
 
-
+    public List<UserResponse> searchUserByNameOrEmail(String query) {
+        try {
+            List<UserResponse> listUser = new ArrayList<>();
+            List<UserEntity> userEntityList = userRepository.searchUserByNameOrEmail(query);
+            for (UserEntity item : userEntityList) {
+                UserResponse user = new UserResponse();
+                user.setId(item.getId());
+                user.setName(item.getUsername());
+                user.setRoleId(item.getRole().getId());
+                listUser.add(user);
+            }
+            return listUser;
+        } catch (Exception e) {
+            throw new CustomException("Lỗi khi tìm kiếm người dùng " + e.getMessage());
+        }
+    }
 
 }

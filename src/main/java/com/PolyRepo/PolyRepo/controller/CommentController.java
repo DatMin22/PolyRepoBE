@@ -56,4 +56,9 @@ public class CommentController {
             return new ResponseEntity<>(baseResponse, HttpStatus.BAD_REQUEST);
         }
     }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<CommentResponse> updateComment(@PathVariable("id") Integer id, @RequestBody CommentRequest commentRequest) {
+        CommentResponse updatedComment = commentServiceImp.updateComment(id, commentRequest.getContent());
+        return ResponseEntity.ok(updatedComment);
+    }
 }
