@@ -3,10 +3,7 @@ package com.PolyRepo.PolyRepo.controller;
 import com.PolyRepo.PolyRepo.Entity.UserEntity;
 import com.PolyRepo.PolyRepo.payload.response.BaseResponse;
 import com.PolyRepo.PolyRepo.payload.response.UserResponse;
-<<<<<<< HEAD
-=======
 import com.PolyRepo.PolyRepo.repository.UserRepository;
->>>>>>> TranThuc
 import com.PolyRepo.PolyRepo.service.imp.UserServiceImp;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,11 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-<<<<<<< HEAD
 
 import java.util.List;
-=======
->>>>>>> TranThuc
 
 @RestController
 @RequestMapping("/user")
