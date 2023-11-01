@@ -11,12 +11,12 @@ import com.PolyRepo.PolyRepo.payload.response.UserResponse;
 import java.util.List;
 
 public interface PostServiceImp {
-
+//    boolean addPosst(PostRequest postRequest);
     List<PostResponse> getAllPost();
 
     PostResponse addPost(PostRequest postRequest);
-//   List <PostResponse> getByCateId(int id);
-List<PostResponse> getPostByID(int id);
+
+    List<PostResponse> getPostByID(int id);
     List<PostResponse> getPostByCateId(int id);
 
 }

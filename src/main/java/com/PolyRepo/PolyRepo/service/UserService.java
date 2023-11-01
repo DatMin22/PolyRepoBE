@@ -1,10 +1,12 @@
 package com.PolyRepo.PolyRepo.service;
 
 
+import com.PolyRepo.PolyRepo.Entity.PostEntity;
 import com.PolyRepo.PolyRepo.Entity.RoleEntity;
 import com.PolyRepo.PolyRepo.Entity.UserEntity;
 import com.PolyRepo.PolyRepo.exception.CustomException;
 import com.PolyRepo.PolyRepo.payload.request.SignupRequest;
+import com.PolyRepo.PolyRepo.payload.response.PostResponse;
 import com.PolyRepo.PolyRepo.payload.response.UserResponse;
 import com.PolyRepo.PolyRepo.repository.UserRepository;
 import com.PolyRepo.PolyRepo.service.imp.UserServiceImp;
@@ -13,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -32,7 +35,7 @@ public class UserService implements UserServiceImp {
         RoleEntity role=new RoleEntity();
         try{
             UserEntity user = new UserEntity();
-            
+
             user.setUsername(request.getUsername());
             user.setPasswords(passwordEncoder.encode(request.getPassword()));
             user.setEmail(request.getEmail());
@@ -68,4 +71,41 @@ public class UserService implements UserServiceImp {
             throw new CustomException("Lỗi add user " + e.getMessage());
         }
     }
+
+
+
+//    @Override
+//    public List<UserResponse> getUserByID(int id) {
+//        List<UserEntity>list=userRepository.findById(id);
+//        List<UserResponse> listResponse=new ArrayList<>();
+//        for (UserEntity data: list){
+//            UserResponse userResponse=new UserResponse();
+//            userResponse.setId(data.getId());
+//            userResponse.setEmail(data.getEmail());
+//            userResponse.setName(data.getUsername());
+//            userResponse.setRoleId(data.getRole().getId());
+//            listResponse.add(userResponse);
+//        }
+//        return listResponse;
+//    }
+
+    @Override
+    public List<UserResponse> getUserByemail(String email) {
+        UserEntity userEntity = userRepository.findByEmail(email);
+
+        // Tạo một danh sách mới có chứa đối tượng UserEntity đó.
+        List<UserEntity> list = Arrays.asList(userEntity);
+
+        List<UserResponse> listResponse = new ArrayList<>();
+        for (UserEntity data : list) {
+            UserResponse userResponse = new UserResponse();
+            userResponse.setId(data.getId());
+            userResponse.setEmail(data.getEmail());
+            userResponse.setName(data.getUsername());
+            userResponse.setRoleId(data.getRole().getId());
+            listResponse.add(userResponse);
+        }
+        return listResponse;
+    }
+
 }

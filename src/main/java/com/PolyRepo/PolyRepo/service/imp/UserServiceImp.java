@@ -3,6 +3,7 @@ package com.PolyRepo.PolyRepo.service.imp;
 //import com.cybersoft.cozastore_java21.payload.request.SignupRequest;
 
 import com.PolyRepo.PolyRepo.payload.request.SignupRequest;
+import com.PolyRepo.PolyRepo.payload.response.PostResponse;
 import com.PolyRepo.PolyRepo.payload.response.UserResponse;
 
 import java.util.List;
@@ -10,6 +11,9 @@ import java.util.List;
 public interface UserServiceImp {
     boolean addUser(SignupRequest request);
     List<UserResponse> getAllUser();
+//    void getUserByEmail(String email);
+//List<UserResponse> getUserByID(int id);
+List<UserResponse> getUserByemail(String email);
 
 }
 
