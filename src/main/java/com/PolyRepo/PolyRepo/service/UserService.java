@@ -6,6 +6,7 @@ import com.PolyRepo.PolyRepo.Entity.UserEntity;
 import com.PolyRepo.PolyRepo.exception.CustomException;
 import com.PolyRepo.PolyRepo.payload.request.SignupRequest;
 import com.PolyRepo.PolyRepo.payload.response.UserResponse;
+import com.PolyRepo.PolyRepo.repository.CommentRepository;
 import com.PolyRepo.PolyRepo.repository.UserRepository;
 import com.PolyRepo.PolyRepo.service.imp.UserServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,4 +69,22 @@ public class UserService implements UserServiceImp {
             throw new CustomException("Lỗi add user " + e.getMessage());
         }
     }
+
+    public List<UserResponse> searchUserByNameOrEmail(String query) {
+        try {
+            List<UserResponse> listUser = new ArrayList<>();
+            List<UserEntity> userEntityList = userRepository.searchUserByNameOrEmail(query);
+            for (UserEntity item : userEntityList) {
+                UserResponse user = new UserResponse();
+                user.setId(item.getId());
+                user.setName(item.getUsername());
+                user.setRoleId(item.getRole().getId());
+                listUser.add(user);
+            }
+            return listUser;
+        } catch (Exception e) {
+            throw new CustomException("Lỗi khi tìm kiếm người dùng " + e.getMessage());
+        }
+    }
+
 }

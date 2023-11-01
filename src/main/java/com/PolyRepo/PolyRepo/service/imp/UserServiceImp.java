@@ -10,6 +10,6 @@ import java.util.List;
 public interface UserServiceImp {
     boolean addUser(SignupRequest request);
     List<UserResponse> getAllUser();
-
+    List<UserResponse> searchUserByNameOrEmail(String query);
 }
 
