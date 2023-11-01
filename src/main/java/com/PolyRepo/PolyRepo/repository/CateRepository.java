@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CateRepository extends JpaRepository<CategoryEntity,Integer> {
-    CategoryEntity findById(int id);
+
 }

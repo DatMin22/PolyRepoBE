@@ -10,4 +10,6 @@ public interface CateServiceImp  {
 //    boolean deletecate(int id);
     CateResponse addCate(CateRequest cateRequest);
     void deleteCatetById(Integer id);
+
+
 }

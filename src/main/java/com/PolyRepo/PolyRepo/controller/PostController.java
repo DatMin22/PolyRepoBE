@@ -30,7 +30,7 @@ public class PostController {
             return new ResponseEntity<>(baseResponse, HttpStatus.OK);
         }
     @PostMapping("/add")
-    public ResponseEntity<?> addComment(@RequestBody PostRequest postRequest) {
+    public ResponseEntity<?> addPost(@RequestBody PostRequest postRequest) {
         BaseResponse baseResponse = new BaseResponse();
         try {
             PostResponse postResponse= postServiceImp.addPost(postRequest);
