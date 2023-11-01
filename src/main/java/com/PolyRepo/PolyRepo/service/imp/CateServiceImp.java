@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface CateServiceImp  {
     List<CateResponse> getAllCate();
-    boolean deletecate(int Id);
+//    boolean deletecate(int id);
     CateResponse addCate(CateRequest cateRequest);
+    void deleteCatetById(Integer id);
+
 
 }

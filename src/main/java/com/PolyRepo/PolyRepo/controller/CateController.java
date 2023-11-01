@@ -21,11 +21,8 @@ import org.springframework.web.bind.annotation.*;
 public class CateController {
     @Autowired
     CateServiceImp cateServiceImp;
-
     @GetMapping("/getAll")
     public ResponseEntity<?> getallCate() {
-
-
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setData(cateServiceImp.getAllCate());
         baseResponse.setMessage("Get All cate");
@@ -33,14 +30,14 @@ public class CateController {
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/delete")
-    public ResponseEntity<?> deletecate(int id) {
-        BaseResponse response = new BaseResponse();
-        response.setStatusCode(200);
-        response.setMessage("abc");
-        response.setData(cateServiceImp.deletecate(id));
-        return new ResponseEntity<>("", HttpStatus.OK);
-    }
+//    @GetMapping("/delete/{id}")
+//    public ResponseEntity<?> deletecate(int id) {
+//        BaseResponse response = new BaseResponse();
+//        response.setStatusCode(200);
+//        response.setMessage("abc");
+//        response.setData(cateServiceImp.deletecate(id));
+//        return new ResponseEntity<>("", HttpStatus.OK);
+//    }
     @PostMapping("/add")
     public ResponseEntity<?> addCate(@RequestBody CateRequest cateRequest) {
         BaseResponse baseResponse = new BaseResponse();
@@ -53,6 +50,21 @@ public class CateController {
             return new ResponseEntity<>(baseResponse, HttpStatus.OK);
         } catch (CustomException e) {
             baseResponse.setData(null);
+            baseResponse.setMessage(e.getMessage());
+            baseResponse.setStatusCode(400);
+            return new ResponseEntity<>(baseResponse, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteCateById(@PathVariable("id") Integer id) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            cateServiceImp.deleteCatetById(id);
+            baseResponse.setMessage("Cate deleted successfully");
+            baseResponse.setStatusCode(200);
+            return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+        } catch (CustomException e) {
             baseResponse.setMessage(e.getMessage());
             baseResponse.setStatusCode(400);
             return new ResponseEntity<>(baseResponse, HttpStatus.BAD_REQUEST);

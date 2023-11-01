@@ -1,5 +1,6 @@
 package com.PolyRepo.PolyRepo.repository;
 
+import com.PolyRepo.PolyRepo.Entity.PostEntity;
 import com.PolyRepo.PolyRepo.Entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,8 +13,13 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<UserEntity,Integer> {
 //    @Query("from users where email = ?1")
 //    List<UserEntity> getUserByEmail(String email);
+//List<UserEntity> findById (int PostId);
 
     UserEntity findByEmail(String email);
     @Query("SELECT u FROM Users u WHERE lower(u.username) LIKE lower(concat('%', :query, '%')) OR lower(u.email) LIKE lower(concat('%', :query, '%'))")
     List<UserEntity> searchUserByNameOrEmail(@Param("query") String query);
+
+
+
+
 }
