@@ -14,7 +14,6 @@ public class ShareEntity {
     @ManyToOne()
     @JoinColumn(name = "post_id")
     PostEntity posts;
-
     @Column(name="sharestatus")
     private Boolean ShareStatus;
     public UserEntity getUser() {

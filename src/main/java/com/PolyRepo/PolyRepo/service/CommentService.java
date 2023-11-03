@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CommentService implements CommentServiceImp {
@@ -46,6 +47,19 @@ public class CommentService implements CommentServiceImp {
         } catch (Exception e) {
             throw new CustomException("Lỗi  " + e.getMessage());
         }
+    }
+
+    @Override
+    public CommentResponse getCommentById(Integer id) {
+        Optional<CommentEntity> comment = commentRepository.findById(id);
+        // Chuyển đổi đối tượng Comment thành CommentResponse để trả về
+        CommentResponse commentResponse = new CommentResponse();
+        commentResponse.setId(comment.get().getId());
+        commentResponse.setContent(comment.get().getContent());
+        commentResponse.setCommentstatus(comment.get().getCommentstatus());
+        commentResponse.setPost_id(comment.get().getPost().getId());
+        commentResponse.setUser_id(comment.get().getUser().getId());
+        return commentResponse;
     }
 
     @Override
@@ -86,6 +100,7 @@ public class CommentService implements CommentServiceImp {
                 .orElseThrow(() -> new CustomException("Không tìm thấy comment với ID: " + id));
         commentRepository.delete(commentEntity);
     }
+
     @Override
     public CommentResponse updateComment(Integer id, String content) {
         try {
