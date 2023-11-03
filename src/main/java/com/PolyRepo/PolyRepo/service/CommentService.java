@@ -6,6 +6,7 @@ import com.PolyRepo.PolyRepo.Entity.UserEntity;
 import com.PolyRepo.PolyRepo.exception.CustomException;
 import com.PolyRepo.PolyRepo.payload.request.CommentRequest;
 import com.PolyRepo.PolyRepo.payload.response.CommentResponse;
+import com.PolyRepo.PolyRepo.payload.response.PostResponse;
 import com.PolyRepo.PolyRepo.repository.CommentRepository;
 import com.PolyRepo.PolyRepo.repository.PostRepository;
 import com.PolyRepo.PolyRepo.repository.UserRepository;
@@ -60,6 +61,22 @@ public class CommentService implements CommentServiceImp {
         commentResponse.setPost_id(comment.get().getPost().getId());
         commentResponse.setUser_id(comment.get().getUser().getId());
         return commentResponse;
+    }
+
+    @Override
+    public List<CommentResponse> getCommentByPostId(int id) {
+        List<CommentEntity>list=commentRepository.findByPostId(id);
+        List<CommentResponse> listResponse=new ArrayList<>();
+        for (CommentEntity data: list){
+            CommentResponse comment=new CommentResponse();
+            comment.setId(data.getId());
+            comment.setContent(data.getContent()); // Sửa lại thành getContent()
+            comment.setCommentstatus(data.getCommentstatus());
+            comment.setPost_id(data.getPost().getId());
+            comment.setUser_id(data.getUser().getId());
+            listResponse.add(comment);
+        }
+        return listResponse;
     }
 
     @Override
