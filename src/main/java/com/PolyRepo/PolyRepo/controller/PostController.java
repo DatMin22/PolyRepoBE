@@ -51,7 +51,7 @@ public class PostController {
 
     BaseResponse response=new BaseResponse();
     response.setStatusCode(200);
-    response.setData(postServiceImp.getPostByID(id));
+    response.setData(postServiceImp.getPostById(id));
     response.setMessage("Post By ID success");
     return new ResponseEntity<>(response , HttpStatus.OK);
 }
@@ -63,5 +63,19 @@ public class PostController {
         response.setData(postServiceImp.getPostByCateId(id));
 
         return new ResponseEntity<>(response , HttpStatus.OK);
+    }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deletePostById(@PathVariable("id") Integer id) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            postServiceImp.deletePostById(id);
+            baseResponse.setMessage("Post deleted successfully");
+            baseResponse.setStatusCode(200);
+            return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+        } catch (CustomException e) {
+            baseResponse.setMessage(e.getMessage());
+            baseResponse.setStatusCode(400);
+            return new ResponseEntity<>(baseResponse, HttpStatus.BAD_REQUEST);
+        }
     }
 }
