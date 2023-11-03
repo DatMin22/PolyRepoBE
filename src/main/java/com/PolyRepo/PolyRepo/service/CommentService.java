@@ -55,7 +55,7 @@ public class CommentService implements CommentServiceImp {
             commentEntity.setContent(commentRequest.getContent());
             commentEntity.setCommentstatus(commentRequest.getCommentstatus());
 
-            // Tìm đối tượng PostEntity từ cơ sở dữ liệu
+//             Tìm đối tượng PostEntity từ cơ sở dữ liệu
             PostEntity postEntity = postRepository.findById(commentRequest.getPost_id())
                     .orElseThrow(() -> new CustomException("Không tìm thấy bài viết với ID: " + commentRequest.getPost_id()));
             commentEntity.setPost(postEntity);
