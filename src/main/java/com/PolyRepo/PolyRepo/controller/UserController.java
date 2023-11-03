@@ -2,16 +2,22 @@ package com.PolyRepo.PolyRepo.controller;
 
 import com.PolyRepo.PolyRepo.exception.CustomException;
 import com.PolyRepo.PolyRepo.payload.request.UserRequest;
+import com.PolyRepo.PolyRepo.Entity.UserEntity;
 import com.PolyRepo.PolyRepo.payload.response.BaseResponse;
 import com.PolyRepo.PolyRepo.payload.response.CommentResponse;
 import com.PolyRepo.PolyRepo.payload.response.UserResponse;
+import com.PolyRepo.PolyRepo.payload.response.UserResponse;
+import com.PolyRepo.PolyRepo.repository.UserRepository;
 import com.PolyRepo.PolyRepo.service.imp.UserServiceImp;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
@@ -68,5 +74,13 @@ public class UserController {
     public ResponseEntity<List<UserResponse>> searchUser(@RequestParam("query") String query) {
         List<UserResponse> userList = userServiceImp.searchUserByNameOrEmail(query.toLowerCase());
         return ResponseEntity.ok(userList);
+    }
+    @GetMapping("/email/{email}")
+    public ResponseEntity<?>getProductByCategory(@PathVariable String email){
+        BaseResponse response=new BaseResponse();
+        response.setStatusCode(200);
+        response.setData(userServiceImp.getUserByemail(email));
+
+        return new ResponseEntity<>(response , HttpStatus.OK);
     }
 }

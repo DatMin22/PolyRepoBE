@@ -11,9 +11,14 @@ import com.PolyRepo.PolyRepo.payload.response.UserResponse;
 import java.util.List;
 
 public interface PostServiceImp {
-
+//    boolean addPosst(PostRequest postRequest);
     List<PostResponse> getAllPost();
 
     PostResponse addPost(PostRequest postRequest);
+
+    PostResponse getPostById(Integer id);
+    List<PostResponse> getPostByCateId(int id);
+    void deletePostById(Integer id);
+
 }
 

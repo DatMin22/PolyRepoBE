@@ -5,6 +5,7 @@ package com.PolyRepo.PolyRepo.service.imp;
 import com.PolyRepo.PolyRepo.payload.request.SignupRequest;
 import com.PolyRepo.PolyRepo.payload.request.UserRequest;
 import com.PolyRepo.PolyRepo.payload.response.CommentResponse;
+import com.PolyRepo.PolyRepo.payload.response.PostResponse;
 import com.PolyRepo.PolyRepo.payload.response.UserResponse;
 import org.springframework.security.core.userdetails.User;
 
@@ -16,6 +17,9 @@ public interface UserServiceImp {
     UserResponse getUserById(Integer id);
     void deleteUserById(Integer id);
     UserResponse updateUser(Integer id, UserRequest userRequest);
+//    void getUserByEmail(String email);
+//List<UserResponse> getUserByID(int id);
+List<UserResponse> getUserByemail(String email);
 
     List<UserResponse> searchUserByNameOrEmail(String query);
 }

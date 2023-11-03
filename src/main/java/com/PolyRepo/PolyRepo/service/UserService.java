@@ -2,12 +2,14 @@ package com.PolyRepo.PolyRepo.service;
 
 
 import com.PolyRepo.PolyRepo.Entity.CommentEntity;
+import com.PolyRepo.PolyRepo.Entity.PostEntity;
 import com.PolyRepo.PolyRepo.Entity.RoleEntity;
 import com.PolyRepo.PolyRepo.Entity.UserEntity;
 import com.PolyRepo.PolyRepo.exception.CustomException;
 import com.PolyRepo.PolyRepo.payload.request.SignupRequest;
 import com.PolyRepo.PolyRepo.payload.request.UserRequest;
 import com.PolyRepo.PolyRepo.payload.response.CommentResponse;
+import com.PolyRepo.PolyRepo.payload.response.PostResponse;
 import com.PolyRepo.PolyRepo.payload.response.UserResponse;
 import com.PolyRepo.PolyRepo.repository.CommentRepository;
 import com.PolyRepo.PolyRepo.repository.UserRepository;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -140,4 +143,41 @@ public class UserService implements UserServiceImp {
 
         return userResponse;
     }
+
+
+
+//    @Override
+//    public List<UserResponse> getUserByID(int id) {
+//        List<UserEntity>list=userRepository.findById(id);
+//        List<UserResponse> listResponse=new ArrayList<>();
+//        for (UserEntity data: list){
+//            UserResponse userResponse=new UserResponse();
+//            userResponse.setId(data.getId());
+//            userResponse.setEmail(data.getEmail());
+//            userResponse.setName(data.getUsername());
+//            userResponse.setRoleId(data.getRole().getId());
+//            listResponse.add(userResponse);
+//        }
+//        return listResponse;
+//    }
+
+    @Override
+    public List<UserResponse> getUserByemail(String email) {
+        UserEntity userEntity = userRepository.findByEmail(email);
+
+        // Tạo một danh sách mới có chứa đối tượng UserEntity đó.
+        List<UserEntity> list = Arrays.asList(userEntity);
+
+        List<UserResponse> listResponse = new ArrayList<>();
+        for (UserEntity data : list) {
+            UserResponse userResponse = new UserResponse();
+            userResponse.setId(data.getId());
+            userResponse.setEmail(data.getEmail());
+            userResponse.setName(data.getUsername());
+            userResponse.setRoleId(data.getRole().getId());
+            listResponse.add(userResponse);
+        }
+        return listResponse;
+    }
+
 }
