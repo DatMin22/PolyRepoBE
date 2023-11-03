@@ -22,6 +22,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class PostService implements PostServiceImp {
 
@@ -59,6 +61,12 @@ public class PostService implements PostServiceImp {
             throw new CustomException("Lỗi getallPost " + e.getMessage());
         }
     }
+    @Override
+    public void deletePostById(Integer id) {
+        PostEntity post = postRepository.findById(id)
+                .orElseThrow(() -> new CustomException("Không tìm thấy post với ID: " + id));
+        postRepository.delete(post);
+    }
 
 
     @Override
@@ -94,25 +102,25 @@ public class PostService implements PostServiceImp {
                 throw new CustomException("Lỗi " + e.getMessage());
 
             }
+
     }
 
 
 
     @Override
-    public List<PostResponse> getPostByID(int id) {
-        List<PostEntity>list=postRepository.findById(id);
-        List<PostResponse> listResponse=new ArrayList<>();
-        for (PostEntity data: list){
-            PostResponse postResponse=new PostResponse();
-            postResponse.setId(data.getId());
-            postResponse.setCategoryId(data.getCategory().getId());
-            postResponse.setUserId(data.getUser().getId());
-            postResponse.setPostStatus(data.getPoststatus());
-            postResponse.setTitle(data.getTitle());
-            postResponse.setFilename(data.getFilename());
-            listResponse.add(postResponse);
-        }
-        return listResponse;
+    public PostResponse getPostById(Integer id) {
+        Optional<PostEntity> post = postRepository.findById(id);
+        // Chuyển đổi đối tượng Comment thành CommentResponse để trả về
+        PostResponse postResponse = new PostResponse();
+        postResponse.setId(post.get().getId());
+        postResponse.setTitle(post.get().getTitle());
+        postResponse.setPostStatus(post.get().getPoststatus());
+        postResponse.setDescription(post.get().getDescriptions());
+        postResponse.setCategoryId(post.get().getCategory().getId());
+        postResponse.setUserId(post.get().getUser().getId());
+        postResponse.setFilename(post.get().getFilename());
+
+        return postResponse;
     }
 
     @Override

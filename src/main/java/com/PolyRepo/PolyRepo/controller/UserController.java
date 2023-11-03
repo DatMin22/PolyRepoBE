@@ -1,7 +1,11 @@
 package com.PolyRepo.PolyRepo.controller;
 
+import com.PolyRepo.PolyRepo.exception.CustomException;
+import com.PolyRepo.PolyRepo.payload.request.UserRequest;
 import com.PolyRepo.PolyRepo.Entity.UserEntity;
 import com.PolyRepo.PolyRepo.payload.response.BaseResponse;
+import com.PolyRepo.PolyRepo.payload.response.CommentResponse;
+import com.PolyRepo.PolyRepo.payload.response.UserResponse;
 import com.PolyRepo.PolyRepo.payload.response.UserResponse;
 import com.PolyRepo.PolyRepo.repository.UserRepository;
 import com.PolyRepo.PolyRepo.service.imp.UserServiceImp;
@@ -13,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/user")
@@ -30,6 +35,42 @@ public class UserController {
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public UserResponse getUserById(@PathVariable int id) {
+        return userServiceImp.getUserById(id);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteCommentById(@PathVariable("id") Integer id) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            userServiceImp.deleteUserById(id);
+            baseResponse.setMessage("User deleted successfully");
+            baseResponse.setStatusCode(200);
+            return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+        } catch (CustomException e) {
+            baseResponse.setMessage(e.getMessage());
+            baseResponse.setStatusCode(400);
+            return new ResponseEntity<>(baseResponse, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/users/{id}")
+    public ResponseEntity<?> updateUser(@PathVariable Integer id, @RequestBody UserRequest userRequest) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            UserResponse updatedUser = userServiceImp.updateUser(id, userRequest);
+            baseResponse.setData(updatedUser);
+            baseResponse.setMessage("User with ID " + id + " has been updated successfully");
+            baseResponse.setStatusCode(200);
+            return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+        } catch (CustomException e) {
+            baseResponse.setData(null);
+            baseResponse.setMessage(e.getMessage());
+            baseResponse.setStatusCode(400);
+            return new ResponseEntity<>(baseResponse, HttpStatus.BAD_REQUEST);
+        }
+    }
     @GetMapping("/search")
     public ResponseEntity<List<UserResponse>> searchUser(@RequestParam("query") String query) {
         List<UserResponse> userList = userServiceImp.searchUserByNameOrEmail(query.toLowerCase());
