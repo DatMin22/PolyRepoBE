@@ -3,6 +3,7 @@ package com.PolyRepo.PolyRepo.controller;
 
 import com.PolyRepo.PolyRepo.payload.request.SignupRequest;
 import com.PolyRepo.PolyRepo.payload.response.BaseResponse;
+import com.PolyRepo.PolyRepo.payload.response.ErrorResponse;
 import com.PolyRepo.PolyRepo.service.imp.UserServiceImp;
 import com.PolyRepo.PolyRepo.utils.JwtHelper;
 import jakarta.validation.Valid;
@@ -61,10 +62,21 @@ public class LoginController {
     public ResponseEntity<?> signup(@Valid SignupRequest request){
         boolean isSuccess = userServiceImp.addUser(request);
 
-        BaseResponse response = new BaseResponse();
-        response.setStatusCode(200);
-        response.setData(isSuccess);
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        if (isSuccess) {
+            BaseResponse response = new BaseResponse();
+            response.setStatusCode(200);
+            response.setData(isSuccess);
+            response.setMessage("Đăng ký thành công");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            BaseResponse response = new BaseResponse();
+            response.setStatusCode(400);
+            if (request.getPassword().length() < 8) {
+                response.setMessage("mật khẩu phải có ít nhất 8 ký tự");
+            } else {
+                response.setMessage("Email đã tồn tại");
+            }
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
     }
 }

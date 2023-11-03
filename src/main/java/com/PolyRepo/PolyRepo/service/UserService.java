@@ -37,28 +37,61 @@ public class UserService implements UserServiceImp {
     @Autowired
     private UserRepository roleRepository;
 
-    @Override
-    public boolean addUser(SignupRequest request) {
-        boolean isSuccess = false;
-        RoleEntity role=new RoleEntity();
-        try{
-            UserEntity user = new UserEntity();
-            
-            user.setUsername(request.getUsername());
-            user.setPasswords(passwordEncoder.encode(request.getPassword()));
-            user.setEmail(request.getEmail());
-            user.setRole(new RoleEntity());
-            user.getRole().setId(1);
-            userRepository.save(user);
-            isSuccess = true;
+//    @Override
+//    public boolean addUser(SignupRequest request) {
+//        boolean isSuccess = false;
+//        RoleEntity role=new RoleEntity();
+//        try{
+//            UserEntity user = new UserEntity();
+//
+//            user.setUsername(request.getUsername());
+//            user.setPasswords(passwordEncoder.encode(request.getPassword()));
+//            user.setEmail(request.getEmail().toLowerCase());
+//            Optional<UserEntity> existingUser = userRepository.findByEmailIgnoreCase(request.getEmail());
+//            if (existingUser.isPresent()) {
+//                throw new RuntimeException("Email đã tồn tại"); // Hoặc ném một ngoại lệ khác phù hợp
+//            }
+//            user.setRole(new RoleEntity());
+//            user.getRole().setId(1);
+//            userRepository.save(user);
+//            isSuccess = true;
+//
+//        }catch (Exception e){
+//
+//        }
+//
+//
+//        return isSuccess;
+//    }
+@Override
+public boolean addUser(SignupRequest request) {
+    boolean isSuccess = false;
+    RoleEntity role=new RoleEntity();
+    try{
+        UserEntity user = new UserEntity();
 
-        }catch (Exception e){
-
+        user.setUsername(request.getUsername());
+        user.setPasswords(passwordEncoder.encode(request.getPassword()));
+        user.setEmail(request.getEmail().toLowerCase());
+        Optional<UserEntity> existingUser = userRepository.findByEmailIgnoreCase(request.getEmail());
+        if (existingUser.isPresent()) {
+            throw new RuntimeException("Email đã tồn tại"); // Hoặc ném một ngoại lệ khác phù hợp
         }
+        if (request.getPassword().length() < 8) {
+            throw new RuntimeException("Tên đăng nhập phải có ít nhất 8 ký tự");
+        }
+        user.setRole(new RoleEntity());
+        user.getRole().setId(1);
+        userRepository.save(user);
+        isSuccess = true;
 
+    }catch (RuntimeException e){
 
-        return isSuccess;
     }
+
+
+    return isSuccess;
+}
 
     @Override
     public List<UserResponse> getAllUser() {
