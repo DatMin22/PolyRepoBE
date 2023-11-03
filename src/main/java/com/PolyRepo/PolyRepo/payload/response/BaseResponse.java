@@ -5,6 +5,7 @@ public class BaseResponse {
     private String message;
     private Object data;
 
+
     public int getStatusCode() {
         return statusCode;
     }

@@ -28,8 +28,22 @@ public class CommentController {
 
 
     @GetMapping("/{id}")
-    public CommentResponse getCommentById(@PathVariable int id) {
-        return commentServiceImp.getCommentById(id);
+    public ResponseEntity<?> getCommentById(@PathVariable int id) {
+        BaseResponse baseResponse = new BaseResponse();
+        baseResponse.setData(commentServiceImp.getCommentById(id));
+        baseResponse.setMessage("Get All Comment");
+        baseResponse.setStatusCode(200);
+        return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/post/{id}")
+    public ResponseEntity<?>getCommentByPostId(@PathVariable int id){
+        BaseResponse response=new BaseResponse();
+        response.setStatusCode(200);
+        response.setData(commentServiceImp.getCommentByPostId(id));
+
+        return new ResponseEntity<>(response , HttpStatus.OK);
     }
 
     @PostMapping("/add")

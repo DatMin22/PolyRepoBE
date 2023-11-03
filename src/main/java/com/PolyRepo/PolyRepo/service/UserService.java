@@ -8,13 +8,13 @@ import com.PolyRepo.PolyRepo.Entity.UserEntity;
 import com.PolyRepo.PolyRepo.exception.CustomException;
 import com.PolyRepo.PolyRepo.payload.request.SignupRequest;
 import com.PolyRepo.PolyRepo.payload.request.UserRequest;
-import com.PolyRepo.PolyRepo.payload.response.CommentResponse;
-import com.PolyRepo.PolyRepo.payload.response.PostResponse;
-import com.PolyRepo.PolyRepo.payload.response.UserResponse;
+import com.PolyRepo.PolyRepo.payload.response.*;
 import com.PolyRepo.PolyRepo.repository.CommentRepository;
 import com.PolyRepo.PolyRepo.repository.UserRepository;
 import com.PolyRepo.PolyRepo.service.imp.UserServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,8 +39,13 @@ public class UserService implements UserServiceImp {
 
     @Override
     public boolean addUser(SignupRequest request) {
+        Optional<UserEntity> existingUser = userRepository.findByEmailIgnoreCase(request.getEmail());
+        if (existingUser.isPresent()) {
+//            throw new BaseResponse("False","email đã tồn tại","null", ErrorConstants.EMAIL_ALREADY_USED_TYPE); // Hoặc ném một ngoại lệ khác phù hợp
+        }
         boolean isSuccess = false;
         RoleEntity role=new RoleEntity();
+
         try{
             UserEntity user = new UserEntity();
             
@@ -53,7 +58,7 @@ public class UserService implements UserServiceImp {
             isSuccess = true;
 
         }catch (Exception e){
-
+            throw new RuntimeException("Lỗi không xác định");
         }
 
 
@@ -109,6 +114,7 @@ public class UserService implements UserServiceImp {
                 UserResponse user = new UserResponse();
                 user.setId(item.getId());
                 user.setName(item.getUsername());
+                user.setEmail(item.getEmail());
                 user.setRoleId(item.getRole().getId());
                 listUser.add(user);
             }
