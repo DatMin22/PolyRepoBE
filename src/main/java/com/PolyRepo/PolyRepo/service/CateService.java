@@ -26,6 +26,7 @@ public class CateService implements CateServiceImp {
                 CateResponse cates = new CateResponse();
                 cates.setId(item.getId());
                 cates.setName(item.getName());
+                cates.setShorts(item.getShorts());
                 listCate.add(cates);
             }
             return listCate;
@@ -40,10 +41,13 @@ public class CateService implements CateServiceImp {
         try {
             CategoryEntity category = new CategoryEntity();
             category.setName(cateRequest.getName());
+            category.setShorts(cateRequest.getShorts());
             CategoryEntity savedCate = cateRepository.save(category);
             CateResponse cateResponse = new CateResponse();
             cateResponse.setId(savedCate.getId());
             cateResponse.setName(savedCate.getName());
+            cateResponse.setShorts(savedCate.getShorts());
+
 
             return cateResponse;
         } catch (Exception e) {
@@ -58,18 +62,6 @@ public class CateService implements CateServiceImp {
                 .orElseThrow(() -> new CustomException("Không tìm thấy cate với ID: " + id));
         cateRepository.delete(category);
     }
-//    @Override
-//    public boolean deletecate(int id) {
-//        boolean isSuccess = false;
-//        try {
-//
-//            CategoryEntity cate = cateRepository.findById(id);
-//            cateRepository.delete(cate);
-//            isSuccess = true;
-//        } catch (Exception e) {
-//            throw new CustomException("Lỗi delete category " + e.getMessage());
-//        }
-//        return isSuccess;
-//    }
+
 
 }

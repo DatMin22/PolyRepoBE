@@ -1,12 +1,9 @@
 package com.PolyRepo.PolyRepo.payload.response;
 
-import org.springframework.http.HttpStatus;
-
-public class BaseResponse {
+public class ErrorResponse {
     private int statusCode;
     private String message;
     private Object data;
-
 
     public int getStatusCode() {
         return statusCode;
@@ -33,8 +30,5 @@ public class BaseResponse {
     }
 
     public void setJsonData(String jsonData) {
-    }
-
-    public void setStatusCode(HttpStatus httpStatus) {
     }
 }

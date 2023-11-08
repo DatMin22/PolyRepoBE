@@ -20,6 +20,19 @@ public class UserEntity {
     @Column(name="email")
     private String email;
 
+//    @Column(name="ResetCode")
+//    private int ResetCode;
+
+//    public int getResetCode() {
+//        return ResetCode;
+//    }
+//
+//    public void setResetCode(int resetCode) {
+//        ResetCode = resetCode;
+//    }
+@Column(name="resettoken")
+private String resetToken;
+
     @ManyToOne()
     @JoinColumn(name = "role_id")
     RoleEntity role;
@@ -71,13 +84,15 @@ public class UserEntity {
     public UserEntity() {
     }
 
-    public UserEntity(int id, String username, String passwords, String email, RoleEntity role) {
+    public UserEntity(int id, String username, String passwords, String email, RoleEntity role,String resetToken) {
         this.id = id;
         this.username = username;
         this.passwords = passwords;
         this.email = email;
         this.role = role;
+        this.resetToken=resetToken;
     }
+
 
     public int getId() {
         return id;
@@ -117,6 +132,14 @@ public class UserEntity {
 
     public void setRole(RoleEntity role) {
         this.role = role;
+    }
+
+    public String getResetToken() {
+        return resetToken;
+    }
+
+    public void setResetToken(String resetToken) {
+        this.resetToken = resetToken;
     }
 }
 
