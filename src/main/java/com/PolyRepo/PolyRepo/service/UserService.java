@@ -39,9 +39,10 @@ public class UserService implements UserServiceImp {
 
     @Override
     public boolean addUser(SignupRequest request) {
-        Optional<UserEntity> existingUser = userRepository.findByEmailIgnoreCase(request.getEmail());
+
+        Optional<UserEntity> existingUser = userRepository.findOneByEmailIgnoreCase(request.getEmail());
         if (existingUser.isPresent()) {
-//            throw new BaseResponse("False","email đã tồn tại","null", ErrorConstants.EMAIL_ALREADY_USED_TYPE); // Hoặc ném một ngoại lệ khác phù hợp
+            throw new IllegalArgumentException("email đã tồn tại"); // Hoặc ném một ngoại lệ khác phù hợp
         }
         boolean isSuccess = false;
         RoleEntity role=new RoleEntity();
