@@ -91,7 +91,7 @@ public class PostController {
     }
     @PutMapping("/update/{id}")
     public ResponseEntity<PostResponse> updatePost(@PathVariable("id") Integer id, @RequestBody PostRequest postRequest) {
-        PostResponse updatedPost = postServiceImp.updatePost(id, postRequest.getTitle(),postRequest.getDescription(),postRequest.getFilename());
+        PostResponse updatedPost = postServiceImp.updatePost(id, postRequest.getTitle(),postRequest.getDescription(),postRequest.getFilename(),postRequest.getCategory_id());
         return ResponseEntity.ok(updatedPost);
     }
 }

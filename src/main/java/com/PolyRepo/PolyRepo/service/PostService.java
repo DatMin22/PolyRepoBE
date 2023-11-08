@@ -62,14 +62,16 @@ public class PostService implements PostServiceImp {
     }
 
     @Override
-    public PostResponse updatePost(Integer id, String title, String desc, String filename) {
+    public PostResponse updatePost(Integer id, String title, String desc, String filename,int cateId) {
         try {
             PostEntity postEntity = postRepository.findById(id)
-                    .orElseThrow(() -> new CustomException("Không tìm thấy comment với ID: " + id));
+                    .orElseThrow(() -> new CustomException("Không tìm thấy post với ID: " + id));
+            postEntity.setCategory(cateRepository.findById(cateId).orElseThrow(() -> new CustomException("Không tìm thấy category với ID: " + cateId)));
 
             postEntity.setDescriptions(desc); // Cập nhật nội dung mới
             postEntity.setTitle(title);
             postEntity.setFilename(filename);
+
             PostEntity updatedPost = postRepository.save(postEntity);
 
             PostResponse postResponse = new PostResponse();

@@ -56,7 +56,7 @@ public class CateController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteCateById(@PathVariable("id") Integer id) {
         BaseResponse baseResponse = new BaseResponse();
         try {
