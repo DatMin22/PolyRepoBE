@@ -6,6 +6,7 @@ public class UserRequest {
     private int roleId;
     private String email;
     private  String password;
+    private String resettoken;
 
     public int getId() {
         return id;
@@ -45,5 +46,13 @@ public class UserRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getResettoken() {
+        return resettoken;
+    }
+
+    public void setResettoken(String resettoken) {
+        this.resettoken = resettoken;
     }
 }
