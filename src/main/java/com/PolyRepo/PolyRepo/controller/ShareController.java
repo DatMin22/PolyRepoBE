@@ -33,7 +33,7 @@ public class ShareController {
         try {
             ShareResponse addedComment = shareServiceImp.addShare(shareRequest);
             baseResponse.setData(addedComment);
-            baseResponse.setMessage("Share added successfully");
+            baseResponse.setMessage("This Share had been added successfully");
             baseResponse.setStatusCode(200);
             return new ResponseEntity<>(baseResponse, HttpStatus.OK);
         } catch (CustomException e) {
@@ -44,12 +44,12 @@ public class ShareController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteShareById(@PathVariable("id") Integer id) {
         BaseResponse baseResponse = new BaseResponse();
         try {
             shareServiceImp.deleteShareByID(id);
-            baseResponse.setMessage("Comment deleted successfully");
+            baseResponse.setMessage("This Share had been deleted successfully");
             baseResponse.setStatusCode(200);
             return new ResponseEntity<>(baseResponse, HttpStatus.OK);
         } catch (CustomException e) {

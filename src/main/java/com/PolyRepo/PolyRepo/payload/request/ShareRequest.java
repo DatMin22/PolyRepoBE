@@ -1,17 +1,32 @@
 package com.PolyRepo.PolyRepo.payload.request;
 
+import java.util.List;
+
 public class ShareRequest {
     private int post_id;
     private int user_id;
-    private Boolean ShareStatus;
+    private int user_id_getshare;
+    private String ShareStatus;
+    private String content;
+    private String link;
 
     public ShareRequest() {
     }
 
-    public ShareRequest( int post_id, int user_id, Boolean shareStatus) {
-        this.post_id = post_id;
-        this.user_id = user_id;
-        ShareStatus = shareStatus;
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 
     public int getPost_id() {
@@ -30,11 +45,19 @@ public class ShareRequest {
         this.user_id = user_id;
     }
 
-    public Boolean getShareStatus() {
+    public String getShareStatus() {
         return ShareStatus;
     }
 
-    public void setShareStatus(Boolean shareStatus) {
+    public void setShareStatus(String shareStatus) {
         ShareStatus = shareStatus;
+    }
+
+    public int getUser_id_getshare() {
+        return user_id_getshare;
+    }
+
+    public void setUser_id_getshare(int user_id_getshare) {
+        this.user_id_getshare = user_id_getshare;
     }
 }

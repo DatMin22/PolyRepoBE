@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -39,8 +40,10 @@ public class ShareService implements ShareServiceImp {
                 share.setId(item.getId());
                 share.setUser_id(item.getUser().getId());
                 share.setPost_id(item.getPosts().getId());
-                ;
+                share.setUser_id_getshare(item.getUserIdGetShare());
                 share.setShareStatus(item.getShareStatus());
+                share.setContent(item.getContent());
+                share.setLink(item.getLink());
                 listShare.add(share);
             }
             return listShare;
@@ -53,8 +56,10 @@ public class ShareService implements ShareServiceImp {
     public ShareResponse addShare(ShareRequest shareRequest) {
         try {
             ShareEntity shareEntity = new ShareEntity();
-            shareEntity.setShareStatus(shareRequest.getShareStatus().booleanValue());
-
+            shareEntity.setUserIdGetShare(shareRequest.getUser_id_getshare());
+            shareEntity.setShareStatus(shareRequest.getShareStatus());
+            shareEntity.setContent(shareRequest.getContent());
+            shareEntity.setLink(shareRequest.getLink());
             // Tìm đối tượng PostEntity từ cơ sở dữ liệu
             PostEntity postEntity = postRepository.findById(shareRequest.getPost_id())
                     .orElseThrow(() -> new CustomException("Không tìm thấy bài viết với ID: " + shareRequest.getPost_id()));
@@ -71,7 +76,10 @@ public class ShareService implements ShareServiceImp {
             shareResponse.setId(savedShare.getId()); // Đặt giá trị cho thuộc tính id
             shareResponse.setPost_id(savedShare.getPosts().getId());
             shareResponse.setUser_id(savedShare.getUser().getId());
-            shareResponse.setShareStatus(savedShare.getShareStatus().booleanValue());
+            shareResponse.setUser_id_getshare(savedShare.getUserIdGetShare());
+            shareResponse.setShareStatus(savedShare.getShareStatus());
+            shareResponse.setContent(savedShare.getContent());
+            shareResponse.setLink(savedShare.getLink());
 
             return shareResponse;
         } catch (Exception e) {
