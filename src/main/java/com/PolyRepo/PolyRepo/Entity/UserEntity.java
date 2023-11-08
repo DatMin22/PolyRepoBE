@@ -22,7 +22,7 @@ public class UserEntity {
 
 //    @Column(name="ResetCode")
 //    private int ResetCode;
-//
+
 //    public int getResetCode() {
 //        return ResetCode;
 //    }
