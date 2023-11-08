@@ -2,20 +2,60 @@ package com.PolyRepo.PolyRepo.Entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity(name = "Share")
 
 public class ShareEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @ManyToOne()
     @JoinColumn(name = "user_id")
     UserEntity user;
+
     @ManyToOne()
     @JoinColumn(name = "post_id")
     PostEntity posts;
     @Column(name="sharestatus")
-    private Boolean ShareStatus;
+    private String ShareStatus;
+
+    @Column(name="user_id_getshare")
+    private int UserIdGetShare;
+
+    @Column(name="content")
+    private String content;
+
+    @Column(name="link")
+    private String link;
+    public ShareEntity() {
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public UserEntity getUser() {
         return user;
     }
@@ -32,19 +72,19 @@ public class ShareEntity {
         this.posts = posts;
     }
 
-    public int getId() {
-        return id;
+    public String getShareStatus() {
+        return ShareStatus;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setShareStatus(String shareStatus) {
+        ShareStatus = shareStatus;
     }
 
-    public UserEntity getUsers() {
-        return user;
+    public int getUserIdGetShare() {
+        return UserIdGetShare;
     }
 
-    public void setUsers(UserEntity users) {
-        this.user = users;
+    public void setUserIdGetShare(int userIdGetShare) {
+        UserIdGetShare = userIdGetShare;
     }
 }
