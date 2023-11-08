@@ -1,15 +1,9 @@
 package com.PolyRepo.PolyRepo.service;
 
+import com.PolyRepo.PolyRepo.Entity.*;
+import com.PolyRepo.PolyRepo.exception.CustomException;
 import com.PolyRepo.PolyRepo.Entity.PostEntity;
 import com.PolyRepo.PolyRepo.Entity.UserEntity;
-import com.PolyRepo.PolyRepo.exception.CustomException;
-import com.PolyRepo.PolyRepo.payload.response.PostResponse;
-import com.PolyRepo.PolyRepo.payload.response.UserResponse;
-import com.PolyRepo.PolyRepo.Entity.CategoryEntity;
-import com.PolyRepo.PolyRepo.Entity.PostEntity;
-import com.PolyRepo.PolyRepo.Entity.RoleEntity;
-import com.PolyRepo.PolyRepo.Entity.UserEntity;
-import com.PolyRepo.PolyRepo.exception.CustomException;
 import com.PolyRepo.PolyRepo.payload.request.PostRequest;
 import com.PolyRepo.PolyRepo.payload.response.PostResponse;
 import com.PolyRepo.PolyRepo.payload.response.UserResponse;
@@ -66,6 +60,33 @@ public class PostService implements PostServiceImp {
         PostEntity post = postRepository.findById(id)
                 .orElseThrow(() -> new CustomException("Không tìm thấy post với ID: " + id));
         postRepository.delete(post);
+    }
+
+    @Override
+    public PostResponse updatePost(Integer id, String title, String desc, String filename,int cateId) {
+        try {
+            PostEntity postEntity = postRepository.findById(id)
+                    .orElseThrow(() -> new CustomException("Không tìm thấy post với ID: " + id));
+            postEntity.setCategory(cateRepository.findById(cateId).orElseThrow(() -> new CustomException("Không tìm thấy category với ID: " + cateId)));
+
+            postEntity.setDescriptions(desc); // Cập nhật nội dung mới
+            postEntity.setTitle(title);
+            postEntity.setFilename(filename);
+
+            PostEntity updatedPost = postRepository.save(postEntity);
+
+            PostResponse postResponse = new PostResponse();
+            postResponse.setId(updatedPost.getId());
+            postResponse.setFilename(updatedPost.getFilename());
+            postResponse.setDescription(updatedPost.getDescriptions());
+            postResponse.setTitle(updatedPost.getTitle());
+            postResponse.setCategoryId(updatedPost.getCategory().getId());
+            postResponse.setUserId(updatedPost.getUser().getId());
+
+            return postResponse;
+        } catch (Exception e) {
+            throw new CustomException("Lỗi  " + e.getMessage());
+        }
     }
 
 
@@ -141,5 +162,27 @@ public class PostService implements PostServiceImp {
         return listResponse;
     }
 
+
+    public List<PostResponse> searchByTitle(String title) {
+
+        List<PostEntity> posts = postRepository.findByTitleLike(title);
+
+        List<PostResponse> responses = new ArrayList<>();
+
+        for(PostEntity post : posts) {
+            PostResponse response = new PostResponse();
+            response.setId(post.getId());
+            response.setTitle(post.getTitle());
+            response.setDescription(post.getDescriptions());
+            response.setFilename(post.getFilename());
+            response.setPostStatus(post.getPoststatus());
+            response.setUserId(post.getUser().getId());
+            response.setCategoryId(post.getCategory().getId());
+            response.setCountlike(post.getCountlike());
+            responses.add(response);
+        }
+
+        return responses;
+    }
 
 }

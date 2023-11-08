@@ -3,6 +3,7 @@ package com.PolyRepo.PolyRepo.payload.request;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
 
@@ -11,7 +12,7 @@ public class SignupRequest {
     private String username;
     @NotNull
     @NotEmpty
-    @Length(min = 8)
+
 
     private String password;
 

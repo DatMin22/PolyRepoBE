@@ -22,6 +22,8 @@ public class PostEntity {
 
     @Column(name="filename")
     private String filename;
+    @Column(name="countlike")
+    private int countlike;
 
     public String getFilename() {
         return filename;
@@ -55,40 +57,21 @@ public class PostEntity {
     @OneToMany(mappedBy ="posts")
     Set<LikeEntity> like;
 
-    public PostEntity(int id, String title, String descriptions, String poststatus, UserEntity user, Set<CommentEntity> comments, Set<ShareEntity> share, Set<LikeEntity> like) {
+    public PostEntity() {
+    }
+
+    public PostEntity(int id, String title, String descriptions, String poststatus, String filename, int countlike, UserEntity user, CategoryEntity category, Set<CommentEntity> comments, Set<ShareEntity> share, Set<LikeEntity> like) {
         this.id = id;
         this.title = title;
         this.descriptions = descriptions;
-
         this.poststatus = poststatus;
+        this.filename = filename;
+        this.countlike = countlike;
         this.user = user;
+        this.category = category;
         this.comments = comments;
         this.share = share;
         this.like = like;
-    }
-
-    public Set<LikeEntity> getLike() {
-        return like;
-    }
-
-    public void setLike(Set<LikeEntity> like) {
-        this.like = like;
-    }
-
-    public Set<ShareEntity> getShare() {
-        return share;
-    }
-
-    public void setShare(Set<ShareEntity> share) {
-        this.share = share;
-    }
-
-    public Set<CommentEntity> getComments() {
-        return comments;
-    }
-
-    public void setComments(Set<CommentEntity> comments) {
-        this.comments = comments;
     }
 
     public int getId() {
@@ -115,14 +98,20 @@ public class PostEntity {
         this.descriptions = descriptions;
     }
 
-
-
     public String getPoststatus() {
         return poststatus;
     }
 
     public void setPoststatus(String poststatus) {
         this.poststatus = poststatus;
+    }
+
+    public int getCountlike() {
+        return countlike;
+    }
+
+    public void setCountlike(int countlike) {
+        this.countlike = countlike;
     }
 
     public UserEntity getUser() {
@@ -133,8 +122,27 @@ public class PostEntity {
         this.user = user;
     }
 
-    public PostEntity() {
+    public Set<CommentEntity> getComments() {
+        return comments;
     }
 
+    public void setComments(Set<CommentEntity> comments) {
+        this.comments = comments;
+    }
 
+    public Set<ShareEntity> getShare() {
+        return share;
+    }
+
+    public void setShare(Set<ShareEntity> share) {
+        this.share = share;
+    }
+
+    public Set<LikeEntity> getLike() {
+        return like;
+    }
+
+    public void setLike(Set<LikeEntity> like) {
+        this.like = like;
+    }
 }
