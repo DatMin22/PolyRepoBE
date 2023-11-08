@@ -57,7 +57,7 @@ public class SecurityConfig {
 
 //                .requestMatchers("/signin","/signup","/uploadfile/**","/downloadfile/**","/posts/**","/user/**").permitAll()
 
-                .requestMatchers("/signin","/signup","/uploadfile/**","/downloadfile/**","/posts/**","/user/**","/cate/**","/comment/**","/like/**").permitAll()
+                .requestMatchers("/signin","/signup","/uploadfile/**","/downloadfile/**","/posts/**","/user/**","/cate/**","/comment/**","/like/**","/share/**").permitAll()
 //>>>>>>> 69eddf533d2b20a936dcd79ba8268af4c0bed0e9
                 .anyRequest().authenticated()
                 .and().addFilterBefore(jwtFilter,UsernamePasswordAuthenticationFilter.class)

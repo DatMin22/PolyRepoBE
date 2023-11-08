@@ -1,18 +1,11 @@
 package com.PolyRepo.PolyRepo.service;
 
+import com.PolyRepo.PolyRepo.Entity.*;
+import com.PolyRepo.PolyRepo.exception.CustomException;
 import com.PolyRepo.PolyRepo.Entity.PostEntity;
 import com.PolyRepo.PolyRepo.Entity.UserEntity;
-import com.PolyRepo.PolyRepo.exception.CustomException;
-import com.PolyRepo.PolyRepo.payload.response.PostResponse;
-import com.PolyRepo.PolyRepo.payload.response.UserResponse;
-import com.PolyRepo.PolyRepo.Entity.CategoryEntity;
-import com.PolyRepo.PolyRepo.Entity.PostEntity;
-import com.PolyRepo.PolyRepo.Entity.RoleEntity;
-import com.PolyRepo.PolyRepo.Entity.UserEntity;
-import com.PolyRepo.PolyRepo.exception.CustomException;
 import com.PolyRepo.PolyRepo.payload.request.PostRequest;
 import com.PolyRepo.PolyRepo.payload.response.PostResponse;
-import com.PolyRepo.PolyRepo.payload.response.UserResponse;
 import com.PolyRepo.PolyRepo.repository.CateRepository;
 import com.PolyRepo.PolyRepo.repository.PostRepository;
 import com.PolyRepo.PolyRepo.repository.UserRepository;
@@ -66,6 +59,31 @@ public class PostService implements PostServiceImp {
         PostEntity post = postRepository.findById(id)
                 .orElseThrow(() -> new CustomException("Không tìm thấy post với ID: " + id));
         postRepository.delete(post);
+    }
+
+    @Override
+    public PostResponse updatePost(Integer id, String title, String desc, String filename) {
+        try {
+            PostEntity postEntity = postRepository.findById(id)
+                    .orElseThrow(() -> new CustomException("Không tìm thấy comment với ID: " + id));
+
+            postEntity.setDescriptions(desc); // Cập nhật nội dung mới
+            postEntity.setTitle(title);
+            postEntity.setFilename(filename);
+            PostEntity updatedPost = postRepository.save(postEntity);
+
+            PostResponse postResponse = new PostResponse();
+            postResponse.setId(updatedPost.getId());
+            postResponse.setFilename(updatedPost.getFilename());
+            postResponse.setDescription(updatedPost.getDescriptions());
+            postResponse.setTitle(updatedPost.getTitle());
+            postResponse.setCategoryId(updatedPost.getCategory().getId());
+            postResponse.setUserId(updatedPost.getUser().getId());
+
+            return postResponse;
+        } catch (Exception e) {
+            throw new CustomException("Lỗi  " + e.getMessage());
+        }
     }
 
 
