@@ -59,7 +59,8 @@ public class SecurityConfig {
 
 
 
-                .requestMatchers("/signin","/signup","/share/**","/uploadfile/**","/downloadfile/**","/posts/**","/user/**","/cate/**","comment/**","/like/**").permitAll()
+
+                .requestMatchers("/signin","/signup","/share/**","/uploadfile/**","/downloadfile/**","/posts/**","/user/**","/cate/**","comment/**","/like/**","/role/**").permitAll()
 //                .requestMatchers("/signin","/signup","/uploadfile/**","/downloadfile/**","/posts/**","/user/**","/cate/**","comment/**").permitAll()
 //                .requestMatchers("/signin","/signup","/uploadfile/**","/downloadfile/**","/posts/**","/user/**","/cate/**","/like/**").permitAll()
 //                .requestMatchers("/signin","/signup","/uploadfile/**","/downloadfile/**","/posts/**","/user/**","/cate/**","comment/**").permitAll()
