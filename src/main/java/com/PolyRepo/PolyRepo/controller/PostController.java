@@ -1,9 +1,11 @@
 package com.PolyRepo.PolyRepo.controller;
 
+import com.PolyRepo.PolyRepo.payload.request.CommentRequest;
 import com.PolyRepo.PolyRepo.payload.response.BaseResponse;
 import com.PolyRepo.PolyRepo.exception.CustomException;
 import com.PolyRepo.PolyRepo.payload.request.PostRequest;
 import com.PolyRepo.PolyRepo.payload.response.BaseResponse;
+import com.PolyRepo.PolyRepo.payload.response.CommentResponse;
 import com.PolyRepo.PolyRepo.payload.response.PostResponse;
 //>>>>>>> 69eddf533d2b20a936dcd79ba8268af4c0bed0e9
 import com.PolyRepo.PolyRepo.service.imp.PostServiceImp;
@@ -86,5 +88,10 @@ public class PostController {
             baseResponse.setStatusCode(400);
             return new ResponseEntity<>(baseResponse, HttpStatus.BAD_REQUEST);
         }
+    }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<PostResponse> updatePost(@PathVariable("id") Integer id, @RequestBody PostRequest postRequest) {
+        PostResponse updatedPost = postServiceImp.updatePost(id, postRequest.getTitle(),postRequest.getDescription(),postRequest.getFilename(),postRequest.getCategory_id());
+        return ResponseEntity.ok(updatedPost);
     }
 }
