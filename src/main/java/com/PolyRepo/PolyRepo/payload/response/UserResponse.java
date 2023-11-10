@@ -5,6 +5,7 @@ public class UserResponse {
     private String name;
     private int roleId;
     private String email;
+    private String resetToken;
     public UserResponse() {
     }
     public int getId() {
@@ -36,5 +37,13 @@ public class UserResponse {
     }
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getResetToken() {
+        return resetToken;
+    }
+
+    public void setResetToken(String resetToken) {
+        this.resetToken = resetToken;
     }
 }

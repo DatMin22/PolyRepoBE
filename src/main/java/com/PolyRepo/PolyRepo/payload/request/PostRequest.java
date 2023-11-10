@@ -1,12 +1,21 @@
 package com.PolyRepo.PolyRepo.payload.request;
 
 public class PostRequest {
+    private int id;
 private String title;
 private String description;
 private String poststatus;
 private int user_id;
 
 private String filename;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getFilename() {
         return filename;

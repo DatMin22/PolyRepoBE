@@ -13,16 +13,22 @@ import java.util.List;
 
 public interface UserServiceImp {
     boolean addUser(SignupRequest request);
+
     List<UserResponse> getAllUser();
-    List<UserResponse> searchUserByNameOrEmail(String query);
+
     UserResponse getUserById(Integer id);
+
     void deleteUserById(Integer id);
+
     UserResponse updateUser(Integer id, UserRequest userRequest);
-//    void getUserByEmail(String email);
+
+    //    void getUserByEmail(String email);
 //List<UserResponse> getUserByID(int id);
-List<UserResponse> getUserByemail(String email);
+    List<UserResponse> getUserByemail(String email);
 
 
-//    List<UserResponse> searchUserByNameOrEmail(String query);
+    List<UserResponse> searchUserByNameOrEmail(String query);
+
+    void changePassword(String username, String currentPassword, String newPassword);
 }
 

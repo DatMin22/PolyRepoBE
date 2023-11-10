@@ -8,12 +8,18 @@ import com.PolyRepo.PolyRepo.payload.response.CommentResponse;
 import com.PolyRepo.PolyRepo.payload.response.UserResponse;
 import com.PolyRepo.PolyRepo.payload.response.UserResponse;
 import com.PolyRepo.PolyRepo.repository.UserRepository;
+import com.PolyRepo.PolyRepo.service.UserService;
 import com.PolyRepo.PolyRepo.service.imp.UserServiceImp;
+import com.PolyRepo.PolyRepo.utils.JwtHelper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,10 +27,16 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin
+@CrossOrigin("*")
 public class UserController {
     @Autowired
     UserServiceImp userServiceImp;
+    @Autowired
+    UserService userService;
+    @Autowired
+    private JwtHelper jwtHelper;
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/getAll")
     public ResponseEntity<?> getAllUser() {
@@ -71,18 +83,40 @@ public class UserController {
             return new ResponseEntity<>(baseResponse, HttpStatus.BAD_REQUEST);
         }
     }
+
     @GetMapping("/search")
     public ResponseEntity<List<UserResponse>> searchUser(@RequestParam("query") String query) {
         List<UserResponse> userList = userServiceImp.searchUserByNameOrEmail(query.toLowerCase());
         return ResponseEntity.ok(userList);
     }
+
     @GetMapping("/email/{email}")
-    public ResponseEntity<?>getProductByCategory(@PathVariable String email){
-        BaseResponse response=new BaseResponse();
+    public ResponseEntity<?> getProductByCategory(@PathVariable String email) {
+        BaseResponse response = new BaseResponse();
         response.setStatusCode(200);
         response.setData(userServiceImp.getUserByemail(email));
 
-        return new ResponseEntity<>(response , HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
-}
 
+
+//    @PostMapping("/change-password")
+//    public ResponseEntity<?> changePassword(@RequestBody PasswordChangeRequest request) {
+//        BaseResponse response = new BaseResponse();
+//        UserEntity user = getUserFromJWT();
+//
+//        userService.changePassword(user, request.getCurrentPassword(),
+//                request.getNewPassword()
+//        );
+//
+//
+//        response.setStatusCode(200);
+//        response.setMessage("Password changed successfully");
+//
+//        return ResponseEntity.ok(response);
+//
+//    }
+
+
+
+}
