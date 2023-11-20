@@ -81,7 +81,7 @@ public boolean addUser(SignupRequest request) {
             throw new RuntimeException("Tên đăng nhập phải có ít nhất 8 ký tự");
         }
         user.setRole(new RoleEntity());
-        user.getRole().setId(1);
+        user.getRole().setId(2);
         userRepository.save(user);
         isSuccess = true;
 
