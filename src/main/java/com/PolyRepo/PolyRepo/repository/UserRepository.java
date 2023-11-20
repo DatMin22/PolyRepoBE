@@ -25,5 +25,5 @@ public interface UserRepository extends JpaRepository<UserEntity,Integer> {
     List<UserEntity> searchUserByNameOrEmail(@Param("query") String query);
     Optional<UserEntity> findByEmailIgnoreCase(String email);
 
-
+    
 }

@@ -19,6 +19,16 @@ public class PostEntity {
 
     @Column(name="poststatus")
     private String poststatus;
+    @Column(name="countlike")
+    private int countlike;
+
+    public int getCountlike() {
+        return countlike;
+    }
+
+    public void setCountlike(int countlike) {
+        this.countlike = countlike;
+    }
 
     @Column(name="filename")
     private String filename;
