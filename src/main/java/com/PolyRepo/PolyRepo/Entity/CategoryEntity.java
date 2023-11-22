@@ -9,8 +9,18 @@ public class CategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name = "shorts")
+    private String shorts;
     @Column(name = "name")
     private String name;
+
+    public String getShorts() {
+        return shorts;
+    }
+
+    public void setShorts(String shorts) {
+        this.shorts = shorts;
+    }
 
     @OneToMany(mappedBy ="category")
     Set<PostEntity> posts;

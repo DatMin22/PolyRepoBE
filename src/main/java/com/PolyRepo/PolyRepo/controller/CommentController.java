@@ -1,48 +1,44 @@
 package com.PolyRepo.PolyRepo.controller;
 
 import com.PolyRepo.PolyRepo.exception.CustomException;
-import com.PolyRepo.PolyRepo.payload.request.CateRequest;
+import com.PolyRepo.PolyRepo.payload.request.CommentRequest;
 import com.PolyRepo.PolyRepo.payload.response.BaseResponse;
-import com.PolyRepo.PolyRepo.payload.response.CateResponse;
-import com.PolyRepo.PolyRepo.service.imp.CateServiceImp;
+import com.PolyRepo.PolyRepo.payload.response.CommentResponse;
+import com.PolyRepo.PolyRepo.service.imp.CommentServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-
-@RequestMapping("/cate")
+@RequestMapping("/comment")
 @CrossOrigin("*")
+public class CommentController {
 
-public class CateController {
     @Autowired
-    CateServiceImp cateServiceImp;
+    CommentServiceImp commentServiceImp;
     @GetMapping("/getAll")
-    public ResponseEntity<?> getallCate() {
+    public ResponseEntity<?> getAllComments() {
         BaseResponse baseResponse = new BaseResponse();
-        baseResponse.setData(cateServiceImp.getAllCate());
-        baseResponse.setMessage("Get All cate");
+        baseResponse.setData(commentServiceImp.getAllComments());
+        baseResponse.setMessage("Get All Comment");
         baseResponse.setStatusCode(200);
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }
 
-//    @GetMapping("/delete/{id}")
-//    public ResponseEntity<?> deletecate(int id) {
-//        BaseResponse response = new BaseResponse();
-//        response.setStatusCode(200);
-//        response.setMessage("abc");
-//        response.setData(cateServiceImp.deletecate(id));
-//        return new ResponseEntity<>("", HttpStatus.OK);
-//    }
+
+    @GetMapping("/{id}")
+    public CommentResponse getCommentById(@PathVariable int id) {
+        return commentServiceImp.getCommentById(id);
+    }
+
     @PostMapping("/add")
-    public ResponseEntity<?> addCate(@RequestBody CateRequest cateRequest) {
+    public ResponseEntity<?> addComment(@RequestBody CommentRequest commentRequest) {
         BaseResponse baseResponse = new BaseResponse();
         try {
-
-            CateResponse cateResponse= cateServiceImp.addCate(cateRequest);
-            baseResponse.setData(cateResponse);
-            baseResponse.setMessage("Cate added successfully");
+            CommentResponse addedComment = commentServiceImp.addComment(commentRequest);
+            baseResponse.setData(addedComment);
+            baseResponse.setMessage("Comment added successfully");
             baseResponse.setStatusCode(200);
             return new ResponseEntity<>(baseResponse, HttpStatus.OK);
         } catch (CustomException e) {
@@ -52,13 +48,12 @@ public class CateController {
             return new ResponseEntity<>(baseResponse, HttpStatus.BAD_REQUEST);
         }
     }
-
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteCateById(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> deleteCommentById(@PathVariable("id") Integer id) {
         BaseResponse baseResponse = new BaseResponse();
         try {
-            cateServiceImp.deleteCatetById(id);
-            baseResponse.setMessage("Cate deleted successfully");
+            commentServiceImp.deleteCommentById(id);
+            baseResponse.setMessage("Comment deleted successfully");
             baseResponse.setStatusCode(200);
             return new ResponseEntity<>(baseResponse, HttpStatus.OK);
         } catch (CustomException e) {
@@ -68,8 +63,8 @@ public class CateController {
         }
     }
     @PutMapping("/update/{id}")
-    public ResponseEntity<CateResponse> updateCate(@PathVariable("id") Integer id, @RequestBody CateRequest cateRequest) {
-        CateResponse updatedCate = cateServiceImp.updateCate(id, cateRequest.getName(),cateRequest.getShorts());
-        return ResponseEntity.ok(updatedCate);
+    public ResponseEntity<CommentResponse> updateComment(@PathVariable("id") Integer id, @RequestBody CommentRequest commentRequest) {
+        CommentResponse updatedComment = commentServiceImp.updateComment(id, commentRequest.getContent());
+        return ResponseEntity.ok(updatedComment);
     }
 }

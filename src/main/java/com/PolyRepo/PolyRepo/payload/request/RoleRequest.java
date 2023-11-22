@@ -1,17 +1,8 @@
-package com.PolyRepo.PolyRepo.payload.response;
+package com.PolyRepo.PolyRepo.payload.request;
 
-public class CateResponse {
+public class RoleRequest {
     private int id;
     private String name;
-    private String shorts;
-
-    public String getShorts() {
-        return shorts;
-    }
-
-    public void setShorts(String shorts) {
-        this.shorts = shorts;
-    }
 
     public int getId() {
         return id;

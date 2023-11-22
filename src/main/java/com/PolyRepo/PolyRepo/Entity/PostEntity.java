@@ -19,6 +19,16 @@ public class PostEntity {
 
     @Column(name="poststatus")
     private String poststatus;
+    @Column(name="countlike")
+    private int countlike;
+
+    public int getCountlike() {
+        return countlike;
+    }
+
+    public void setCountlike(int countlike) {
+        this.countlike = countlike;
+    }
 
     @Column(name="filename")
     private String filename;
@@ -116,7 +126,6 @@ public class PostEntity {
     }
 
 
-
     public String getPoststatus() {
         return poststatus;
     }
@@ -136,5 +145,12 @@ public class PostEntity {
     public PostEntity() {
     }
 
+    public PostEntity(int id, String title, String descriptions, String poststatus, UserEntity user) {
+        this.id = id;
+        this.title = title;
+        this.descriptions = descriptions;
+        this.poststatus = poststatus;
+        this.user = user;
+    }
 
 }
