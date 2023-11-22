@@ -2,12 +2,9 @@ package com.PolyRepo.PolyRepo.controller;
 
 import com.PolyRepo.PolyRepo.exception.CustomException;
 import com.PolyRepo.PolyRepo.payload.request.CateRequest;
-import com.PolyRepo.PolyRepo.payload.request.PostRequest;
 import com.PolyRepo.PolyRepo.payload.response.BaseResponse;
 import com.PolyRepo.PolyRepo.payload.response.CateResponse;
-import com.PolyRepo.PolyRepo.payload.response.PostResponse;
 import com.PolyRepo.PolyRepo.service.imp.CateServiceImp;
-import com.PolyRepo.PolyRepo.service.imp.PostServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -69,5 +66,10 @@ public class CateController {
             baseResponse.setStatusCode(400);
             return new ResponseEntity<>(baseResponse, HttpStatus.BAD_REQUEST);
         }
+    }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<CateResponse> updateCate(@PathVariable("id") Integer id, @RequestBody CateRequest cateRequest) {
+        CateResponse updatedCate = cateServiceImp.updateCate(id, cateRequest.getName(),cateRequest.getShorts());
+        return ResponseEntity.ok(updatedCate);
     }
 }

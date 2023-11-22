@@ -67,7 +67,7 @@ public class UserController {
         }
     }
 
-    @PutMapping("/users/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<?> updateUser(@PathVariable Integer id, @RequestBody UserRequest userRequest) {
         BaseResponse baseResponse = new BaseResponse();
         try {
@@ -116,6 +116,7 @@ public class UserController {
 //        return ResponseEntity.ok(response);
 //
 //    }
+
 
 
 

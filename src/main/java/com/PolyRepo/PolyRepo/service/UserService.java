@@ -54,13 +54,14 @@ public class UserService implements UserServiceImp {
             user.setPasswords(passwordEncoder.encode(request.getPassword()));
             user.setEmail(request.getEmail());
             user.setRole(new RoleEntity());
-            user.getRole().setId(1);
+            user.getRole().setId(2);
             userRepository.save(user);
             isSuccess = true;
 
         }catch (Exception e){
             throw new RuntimeException("Lỗi không xác định");
         }
+
 
 
         return isSuccess;

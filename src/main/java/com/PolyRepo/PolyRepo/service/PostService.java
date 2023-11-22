@@ -42,7 +42,7 @@ public class PostService implements PostServiceImp {
 //                post.setPostStatus(item.getPoststatus());
                 post.setTitle(item.getTitle());
                 post.setUserId(item.getUser().getId());
-
+                post.setCountlike(item.getCountlike());
                 post.setPostStatus(item.getPoststatus());
                 post.setCategoryId(item.getCategory().getId());
                 post.setPostStatus(item.getPoststatus());

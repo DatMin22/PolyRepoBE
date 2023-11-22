@@ -1,9 +1,11 @@
 package com.PolyRepo.PolyRepo.service;
 
 import com.PolyRepo.PolyRepo.Entity.CategoryEntity;
+import com.PolyRepo.PolyRepo.Entity.PostEntity;
 import com.PolyRepo.PolyRepo.exception.CustomException;
 import com.PolyRepo.PolyRepo.payload.request.CateRequest;
 import com.PolyRepo.PolyRepo.payload.response.CateResponse;
+import com.PolyRepo.PolyRepo.payload.response.PostResponse;
 import com.PolyRepo.PolyRepo.repository.CateRepository;
 import com.PolyRepo.PolyRepo.service.imp.CateServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +63,28 @@ public class CateService implements CateServiceImp {
         CategoryEntity category = cateRepository.findById(id)
                 .orElseThrow(() -> new CustomException("Không tìm thấy cate với ID: " + id));
         cateRepository.delete(category);
+    }
+
+    @Override
+    public CateResponse updateCate(Integer id, String name, String shorts) {
+        try {
+            CategoryEntity categoryEntity = cateRepository.findById(id)
+                    .orElseThrow(() -> new CustomException("Không tìm thấy cate với ID: " + id));
+
+            categoryEntity.setName(name); // Cập nhật nội dung mới
+            categoryEntity.setShorts(shorts);
+
+            CategoryEntity updatedCate = cateRepository.save(categoryEntity);
+
+            CateResponse cateResponse = new CateResponse();
+            cateResponse.setId(updatedCate.getId());
+            cateResponse.setShorts(updatedCate.getShorts());
+            cateResponse.setName(updatedCate.getName());
+
+            return cateResponse;
+        } catch (Exception e) {
+            throw new CustomException("Lỗi  " + e.getMessage());
+        }
     }
 
 

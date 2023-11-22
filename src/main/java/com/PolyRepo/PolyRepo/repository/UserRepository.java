@@ -28,5 +28,5 @@ UserEntity  findByUsername (String username);
     Optional<UserEntity> findByEmailIgnoreCase(String email);
     UserEntity findByResetToken(String token);
 
-
+    
 }

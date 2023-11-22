@@ -6,6 +6,15 @@ public class PostResponse {
     private String description;
     private String title;
 
+    private int countlike;
+
+    public int getCountlike() {
+        return countlike;
+    }
+
+    public void setCountlike(int countlike) {
+        this.countlike = countlike;
+    }
 
     private int categoryId;
     private String postStatus;
