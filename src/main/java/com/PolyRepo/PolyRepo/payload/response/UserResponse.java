@@ -46,4 +46,5 @@ public class UserResponse {
     public void setResetToken(String resetToken) {
         this.resetToken = resetToken;
     }
+
 }

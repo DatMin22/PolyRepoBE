@@ -18,6 +18,7 @@ public interface LikeServiceImp {
     List<LikeResponse> getLikeByPostId(int id);
 
     void deleteLikeById(Integer id);
+    List<LikeResponse> getLikeByPostIdOrUserId(int postId, int userId);
 
 
 }

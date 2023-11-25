@@ -80,6 +80,11 @@ public class PasswordController {
 
         // Đổi mật khẩu
 
+        if(request.getNewPassword().length() < 8){
+            response.setMessage("Mật khẩu phải trên 8 kí tự");
+            return ResponseEntity.badRequest().body(response);
+        }
+        // Đổi mật khẩu
         passwordResetService.changePassword(request.getToken(), request.getNewPassword());
         // Xóa mã xác nhận
         passwordResetService.deletePasswordResetToken(request.getToken());

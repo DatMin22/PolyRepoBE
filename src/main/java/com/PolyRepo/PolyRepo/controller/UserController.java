@@ -101,35 +101,26 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-//    @PostMapping("/change-password")
-//    public ResponseEntity<?> changePassword(@RequestBody PasswordChangeRequest request) {
-//        BaseResponse response = new BaseResponse();
-//        UserEntity user = getUserFromJWT();
-//
-//        userService.changePassword(user, request.getCurrentPassword(),
-//                request.getNewPassword()
-//        );
-//
-//
-//        response.setStatusCode(200);
-//        response.setMessage("Password changed successfully");
-//
-//        return ResponseEntity.ok(response);
-//
-//    }
+
 
     @PostMapping("/change-password")
     public ResponseEntity<?> changePassword(@RequestBody PasswordChangeRequest request,
                                             @RequestHeader("Authorization") String token) {
 
-        String username = jwtHelper.getUsernameFromToken(token);
 
+        BaseResponse response = new BaseResponse();
+
+        String email = jwtHelper.getUsernameFromToken(token);
+        if(email == null) {
+            throw new IllegalArgumentException("email is required");
+        }
         userService.changePassword(
-                username,
+                email,
                 request.getCurrentPassword(),
                 request.getNewPassword());
-
-        return ResponseEntity.ok().build();
+        response.setStatusCode(200);
+        response.setMessage("Đổi mật khẩu thành công");
+        return new ResponseEntity<>(response, HttpStatus.OK);
 
     }
 
