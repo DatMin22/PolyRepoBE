@@ -58,21 +58,4 @@ public class ShareController {
             return new ResponseEntity<>(baseResponse, HttpStatus.BAD_REQUEST);
         }
     }
-
-//    @PostMapping("/update")
-//    public ResponseEntity<?> updateShareByID(@RequestBody ShareRequest shareRequest) {
-//        BaseResponse baseResponse = new BaseResponse();
-//        try {
-//            ShareResponse addedComment = shareServiceImp.addShare(shareRequest);
-//            baseResponse.setData(addedComment);
-//            baseResponse.setMessage("Share added successfully");
-//            baseResponse.setStatusCode(200);
-//            return new ResponseEntity<>(baseResponse, HttpStatus.OK);
-//        } catch (CustomException e) {
-//            baseResponse.setData(null);
-//            baseResponse.setMessage(e.getMessage());
-//            baseResponse.setStatusCode(400);
-//            return new ResponseEntity<>(baseResponse, HttpStatus.BAD_REQUEST);
-//        }
-//    }
 }
