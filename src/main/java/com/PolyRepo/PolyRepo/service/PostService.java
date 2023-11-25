@@ -139,6 +139,7 @@ public class PostService implements PostServiceImp {
         postResponse.setCategoryId(post.get().getCategory().getId());
         postResponse.setUserId(post.get().getUser().getId());
         postResponse.setFilename(post.get().getFilename());
+        postResponse.setCountlike(post.get().getCountlike());
 
         return postResponse;
     }

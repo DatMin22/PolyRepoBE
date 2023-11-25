@@ -67,7 +67,7 @@ public class LikeController {
     public ResponseEntity<?>getLikeByPostId(@PathVariable int id){
         BaseResponse response=new BaseResponse();
         response.setStatusCode(200);
-        response.setData(likeServiceImp.getLikeByUserId(id));
+        response.setData(likeServiceImp.getLikeByPostId(id));
 
         return new ResponseEntity<>(response , HttpStatus.OK);
     }
