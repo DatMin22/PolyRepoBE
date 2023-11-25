@@ -8,6 +8,7 @@ public class UserRequest {
     private  String password;
     private String resettoken;
 
+
     public int getId() {
         return id;
     }
@@ -55,4 +56,5 @@ public class UserRequest {
     public void setResettoken(String resettoken) {
         this.resettoken = resettoken;
     }
+
 }

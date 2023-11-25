@@ -36,5 +36,10 @@ public class JwtHelper {
 
         return claims;
     }
+    public String getUsernameFromToken(String token) {
+        Claims claims = decodeToken(token);
+        String email = claims.getSubject();
+        return email;
 
+    }
 }

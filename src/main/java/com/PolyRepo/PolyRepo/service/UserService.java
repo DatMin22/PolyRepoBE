@@ -1,24 +1,21 @@
 package com.PolyRepo.PolyRepo.service;
 
 
-import com.PolyRepo.PolyRepo.Entity.CommentEntity;
-import com.PolyRepo.PolyRepo.Entity.PostEntity;
 import com.PolyRepo.PolyRepo.Entity.RoleEntity;
 import com.PolyRepo.PolyRepo.Entity.UserEntity;
 import com.PolyRepo.PolyRepo.exception.CustomException;
+import com.PolyRepo.PolyRepo.exception.InvalidPasswordException;
 import com.PolyRepo.PolyRepo.payload.request.SignupRequest;
 import com.PolyRepo.PolyRepo.payload.request.UserRequest;
 import com.PolyRepo.PolyRepo.payload.response.*;
-import com.PolyRepo.PolyRepo.repository.CommentRepository;
 import com.PolyRepo.PolyRepo.repository.UserRepository;
 import com.PolyRepo.PolyRepo.service.imp.UserServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,11 +42,11 @@ public class UserService implements UserServiceImp {
             throw new IllegalArgumentException("email đã tồn tại"); // Hoặc ném một ngoại lệ khác phù hợp
         }
         boolean isSuccess = false;
-        RoleEntity role=new RoleEntity();
+        RoleEntity role = new RoleEntity();
 
-        try{
+        try {
             UserEntity user = new UserEntity();
-            
+
             user.setUsername(request.getUsername());
             user.setPasswords(passwordEncoder.encode(request.getPassword()));
             user.setEmail(request.getEmail());
@@ -58,7 +55,7 @@ public class UserService implements UserServiceImp {
             userRepository.save(user);
             isSuccess = true;
 
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException("Lỗi không xác định");
         }
 
@@ -97,7 +94,7 @@ public class UserService implements UserServiceImp {
         userResponse.setId(user.get().getId());
         userResponse.setEmail(user.get().getEmail());
         userResponse.setName(user.get().getUsername());
-       userResponse.setRoleId(user.get().getId());
+        userResponse.setRoleId(user.get().getId());
         return userResponse;
     }
 
@@ -127,10 +124,6 @@ public class UserService implements UserServiceImp {
 
     }
 
-    @Override
-    public void changePassword(String username, String currentPassword, String newPassword) {
-
-    }
 
 
     @Override
@@ -144,15 +137,12 @@ public class UserService implements UserServiceImp {
         userEntity.setRole(roleEntity);
         userEntity.setUsername(userRequest.getName());
         userEntity.setEmail(userRequest.getEmail());
-//        userEntity.setPasswords(userRequest.getPassword());
+//      userEntity.setPasswords(userRequest.getPassword());
         userEntity.setPasswords(passwordEncoder.encode(userRequest.getPassword()));
-
         UserEntity updatedUser = userRepository.save(userEntity);
-
         UserResponse userResponse = new UserResponse();
         userResponse.setId(updatedUser.getId());
         userResponse.setName(updatedUser.getUsername());
-
         userResponse.setRoleId(updatedUser.getRole().getId());
         userResponse.setEmail(updatedUser.getEmail());
 
@@ -179,6 +169,33 @@ public class UserService implements UserServiceImp {
             listResponse.add(userResponse);
         }
         return listResponse;
+    }
+
+
+    @Override
+    public void changePassword(String email, String currentPassword, String newPassword) {
+        UserEntity user = userRepository.findByEmail(email);
+        if(user == null) {
+            throw new UsernameNotFoundException("Không tìm thấy user với email này");
+        }
+        if (!passwordEncoder.matches(currentPassword, user.getPasswords())) {
+            throw new InvalidPasswordException("Mật khẩu hiện tại không chính xác");
+        }
+        int minPasswordLength = 8; // Độ dài tối thiểu của mật khẩu
+        if (newPassword.length() < minPasswordLength) {
+            throw new IllegalArgumentException("Mật khẩu mới phải có ít nhất " + minPasswordLength + " ký tự");
+        }
+        String hashedNewPassword = passwordEncoder.encode(newPassword);
+        user.setPasswords(hashedNewPassword);
+        userRepository.save(user);
+    }
+
+    private boolean checkPassword(String rawPassword, String hashedPassword) {
+        return BCrypt.checkpw(rawPassword, hashedPassword);
+    }
+
+    private String hashPassword(String password) {
+        return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
 }

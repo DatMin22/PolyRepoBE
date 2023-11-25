@@ -1,6 +1,7 @@
 package com.PolyRepo.PolyRepo.controller;
 
 import com.PolyRepo.PolyRepo.exception.CustomException;
+import com.PolyRepo.PolyRepo.payload.request.PasswordChangeRequest;
 import com.PolyRepo.PolyRepo.payload.request.UserRequest;
 import com.PolyRepo.PolyRepo.Entity.UserEntity;
 import com.PolyRepo.PolyRepo.payload.response.BaseResponse;
@@ -100,24 +101,26 @@ public class UserController {
     }
 
 
-//    @PostMapping("/change-password")
-//    public ResponseEntity<?> changePassword(@RequestBody PasswordChangeRequest request) {
-//        BaseResponse response = new BaseResponse();
-//        UserEntity user = getUserFromJWT();
-//
-//        userService.changePassword(user, request.getCurrentPassword(),
-//                request.getNewPassword()
-//        );
-//
-//
-//        response.setStatusCode(200);
-//        response.setMessage("Password changed successfully");
-//
-//        return ResponseEntity.ok(response);
-//
-//    }
 
 
+    @PostMapping("/change-password")
+    public ResponseEntity<?> changePassword(@RequestBody PasswordChangeRequest request,
+                                            @RequestHeader("Authorization") String token) {
+        BaseResponse response = new BaseResponse();
+
+        String email = jwtHelper.getUsernameFromToken(token);
+        if(email == null) {
+            throw new IllegalArgumentException("email is required");
+        }
+        userService.changePassword(
+                email,
+                request.getCurrentPassword(),
+                request.getNewPassword());
+        response.setStatusCode(200);
+        response.setMessage("Đổi mật khẩu thành công");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+
+    }
 
 
 }
