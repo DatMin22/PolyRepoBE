@@ -58,4 +58,10 @@ public class ShareController {
             return new ResponseEntity<>(baseResponse, HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<ShareResponse> updateComment(@PathVariable("id") Integer id, @RequestBody ShareRequest commentRequest) {
+        ShareResponse updatedComment = shareServiceImp.updateShare(id, commentRequest.getContent());
+        return ResponseEntity.ok(updatedComment);
+    }
 }

@@ -1,9 +1,6 @@
 package com.PolyRepo.PolyRepo.service;
 
-import com.PolyRepo.PolyRepo.Entity.PostEntity;
-import com.PolyRepo.PolyRepo.Entity.RoleEntity;
-import com.PolyRepo.PolyRepo.Entity.ShareEntity;
-import com.PolyRepo.PolyRepo.Entity.UserEntity;
+import com.PolyRepo.PolyRepo.Entity.*;
 import com.PolyRepo.PolyRepo.exception.CustomException;
 import com.PolyRepo.PolyRepo.payload.request.ShareRequest;
 import com.PolyRepo.PolyRepo.payload.request.SignupRequest;
@@ -88,6 +85,30 @@ public class ShareService implements ShareServiceImp {
         ShareEntity commentEntity = shareRepository.findById(id)
                 .orElseThrow(() -> new CustomException("Không tìm thấy share với ID: " + id));
         shareRepository.delete(commentEntity);
+    }
+
+    @Override
+    public ShareResponse updateShare(Integer id, String content) {
+        try {
+            ShareEntity shareEntity = shareRepository.findById(id)
+                    .orElseThrow(() -> new CustomException("Không tìm thấy comment với ID: " + id));
+
+            shareEntity.setContent(content); // Cập nhật nội dung mới
+            shareEntity.setId(id);
+
+            ShareEntity updatedShare = shareRepository.save(shareEntity);
+
+            ShareResponse shareResponse = new ShareResponse();
+            shareResponse.setId(updatedShare.getId());
+            shareResponse.setUser_id(updatedShare.getUser().getId());
+            shareResponse.setPost_id(updatedShare.getPosts().getId());
+            shareResponse.setShareStatus(updatedShare.getShareStatus());
+            shareResponse.setContent(updatedShare.getContent());
+
+            return shareResponse;
+        } catch (Exception e) {
+            throw new CustomException("Lỗi  " + e.getMessage());
+        }
     }
 }
 

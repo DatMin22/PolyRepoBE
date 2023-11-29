@@ -12,6 +12,8 @@ public interface ShareServiceImp {
 
     ShareResponse addShare(ShareRequest shareRequest);
 
+    ShareResponse updateShare(Integer id,String content);
+
     void deleteShareByID(Integer id);
 
 //    void updateShareByID(Integer id);
