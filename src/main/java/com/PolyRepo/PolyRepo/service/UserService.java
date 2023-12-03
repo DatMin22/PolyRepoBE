@@ -11,11 +11,11 @@ import com.PolyRepo.PolyRepo.payload.response.*;
 import com.PolyRepo.PolyRepo.repository.UserRepository;
 import com.PolyRepo.PolyRepo.service.imp.UserServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.PolyRepo.PolyRepo.repository.RoleRepository;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,7 +32,7 @@ public class UserService implements UserServiceImp {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private UserRepository roleRepository;
+    private RoleRepository roleRepository;
 
     @Override
     public boolean addUser(SignupRequest request) {
@@ -124,42 +124,49 @@ public class UserService implements UserServiceImp {
 
     @Override
     public UserResponse updateUser(Integer id, UserRequest userRequest) {
+
         UserEntity userEntity = userRepository.findById(id)
-                .orElseThrow(() -> new CustomException("User with ID " + id + " not found"));
+                .orElseThrow(() -> new CustomException("User not found"));
 
-        RoleEntity roleEntity = roleRepository.findById(userRequest.getRoleId())
-                .orElseThrow(() -> new CustomException("Role with ID " + userRequest.getRoleId() + " not found")).getRole();
+        RoleEntity roleEntity = roleRepository
+                .findById(userRequest.getRoleId())
+                .orElseThrow(() -> new CustomException("Role not found"));
+        String currentEmail = userEntity.getEmail();
 
+        if(!currentEmail.equals(userRequest.getEmail())) {
+
+            Optional<UserEntity> existingUser = userRepository.findOneByEmailIgnoreCase(userRequest.getEmail());
+
+            if(existingUser.isPresent()) {
+                throw new CustomException("Email đã tồn tại");
+            }
+
+        }
         userEntity.setRole(roleEntity);
         userEntity.setUsername(userRequest.getName());
         userEntity.setEmail(userRequest.getEmail());
-//      userEntity.setPasswords(userRequest.getPassword());
         userEntity.setPasswords(passwordEncoder.encode(userRequest.getPassword()));
         UserEntity updatedUser = userRepository.save(userEntity);
-        UserResponse userResponse = new UserResponse();
-        userResponse.setId(updatedUser.getId());
-        userResponse.setName(updatedUser.getUsername());
-        userResponse.setRoleId(updatedUser.getRole().getId());
-        userResponse.setEmail(updatedUser.getEmail());
+//<<<<<<< HEAD
+//        UserResponse userResponse = new UserResponse();
+//        userResponse.setId(updatedUser.getId());
+//        userResponse.setName(updatedUser.getUsername());
+//        userResponse.setRoleId(updatedUser.getRole().getId());
+//        userResponse.setEmail(updatedUser.getEmail());
+//=======
 
-        return userResponse;
+        UserResponse response = new UserResponse();
+        response.setId(updatedUser.getId());
+        response.setName(updatedUser.getUsername());
+        response.setRoleId(updatedUser.getRole().getId());
+        response.setEmail(updatedUser.getEmail());
+
+        return response;
+
     }
 
 
-//    @Override
-//    public List<UserResponse> getUserByID(int id) {
-//        List<UserEntity>list=userRepository.findById(id);
-//        List<UserResponse> listResponse=new ArrayList<>();
-//        for (UserEntity data: list){
-//            UserResponse userResponse=new UserResponse();
-//            userResponse.setId(data.getId());
-//            userResponse.setEmail(data.getEmail());
-//            userResponse.setName(data.getUsername());
-//            userResponse.setRoleId(data.getRole().getId());
-//            listResponse.add(userResponse);
-//        }
-//        return listResponse;
-//    }
+
 
     @Override
     public List<UserResponse> getUserByemail(String email) {
@@ -184,7 +191,7 @@ public class UserService implements UserServiceImp {
     @Override
     public void changePassword(String email, String currentPassword, String newPassword) {
         UserEntity user = userRepository.findByEmail(email);
-        if(user == null) {
+        if (user == null) {
             throw new UsernameNotFoundException("Không tìm thấy user với email này");
         }
         if (!passwordEncoder.matches(currentPassword, user.getPasswords())) {
@@ -206,5 +213,6 @@ public class UserService implements UserServiceImp {
     private String hashPassword(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }
+
 
 }

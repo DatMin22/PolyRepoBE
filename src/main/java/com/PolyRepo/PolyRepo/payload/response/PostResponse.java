@@ -3,14 +3,16 @@ package com.PolyRepo.PolyRepo.payload.response;
 public class PostResponse {
     private int id;
     private int userId;
-    private String description;
     private String title;
+    private String description;
+
 
 
     private int categoryId;
     private String postStatus;
 
     private String filename;
+    private int countlike;
 
     public String getFilename() {
         return filename;
@@ -68,5 +70,13 @@ public class PostResponse {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public int getCountlike() {
+        return countlike;
+    }
+
+    public void setCountlike(int countlike) {
+        this.countlike = countlike;
     }
 }

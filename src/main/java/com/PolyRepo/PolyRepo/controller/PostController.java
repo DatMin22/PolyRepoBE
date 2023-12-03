@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/posts")
 @CrossOrigin("*")
@@ -94,4 +96,10 @@ public class PostController {
         PostResponse updatedPost = postServiceImp.updatePost(id, postRequest.getTitle(),postRequest.getDescription(),postRequest.getFilename(),postRequest.getCategory_id());
         return ResponseEntity.ok(updatedPost);
     }
+
+    @GetMapping("/search")
+    public List<PostResponse> search(@RequestParam String title) {
+        return postServiceImp.searchByTitle(title);
+    }
+
 }

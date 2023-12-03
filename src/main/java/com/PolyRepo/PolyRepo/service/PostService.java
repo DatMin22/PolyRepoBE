@@ -6,6 +6,7 @@ import com.PolyRepo.PolyRepo.Entity.PostEntity;
 import com.PolyRepo.PolyRepo.Entity.UserEntity;
 import com.PolyRepo.PolyRepo.payload.request.PostRequest;
 import com.PolyRepo.PolyRepo.payload.response.PostResponse;
+import com.PolyRepo.PolyRepo.payload.response.UserResponse;
 import com.PolyRepo.PolyRepo.repository.CateRepository;
 import com.PolyRepo.PolyRepo.repository.PostRepository;
 import com.PolyRepo.PolyRepo.repository.UserRepository;
@@ -161,5 +162,27 @@ public class PostService implements PostServiceImp {
         return listResponse;
     }
 
+
+    public List<PostResponse> searchByTitle(String title) {
+
+        List<PostEntity> posts = postRepository.findByTitleLike(title);
+
+        List<PostResponse> responses = new ArrayList<>();
+
+        for(PostEntity post : posts) {
+            PostResponse response = new PostResponse();
+            response.setId(post.getId());
+            response.setTitle(post.getTitle());
+            response.setDescription(post.getDescriptions());
+            response.setFilename(post.getFilename());
+            response.setPostStatus(post.getPoststatus());
+            response.setUserId(post.getUser().getId());
+            response.setCategoryId(post.getCategory().getId());
+            response.setCountlike(post.getCountlike());
+            responses.add(response);
+        }
+
+        return responses;
+    }
 
 }
