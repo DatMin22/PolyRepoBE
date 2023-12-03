@@ -47,4 +47,5 @@ public class UserResponse {
         this.resetToken = resetToken;
     }
 
+
 }
