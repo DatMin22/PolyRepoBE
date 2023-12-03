@@ -60,7 +60,7 @@ public class SecurityConfig {
 
 
 
-                .requestMatchers("/signin","/signup","/share/**","/uploadfile/**","/downloadfile/**","/posts/**","/user/**","/cate/**","comment/**","/like/**","/role/**","password/**").permitAll()
+                .requestMatchers("/signin","/signup","/share/**","/uploadfile/**","/downloadfile/**","/posts/**","/user/**","/cate/**","comment/**","/like/**","/role/**","/password/**").permitAll()
 
 
 

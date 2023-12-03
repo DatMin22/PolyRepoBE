@@ -83,7 +83,7 @@ public class LikeController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id} ")
     public ResponseEntity<?> deleteLikeById(@PathVariable("id") Integer id) {
         BaseResponse baseResponse = new BaseResponse();
         try {

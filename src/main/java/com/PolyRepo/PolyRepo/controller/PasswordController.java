@@ -34,6 +34,7 @@ public class PasswordController {
         BaseResponse response = new BaseResponse();
         // Lấy địa chỉ email của người dùng
         String email = request.getEmail();
+        System.out.println("email" + email);
         Optional<UserEntity> existingUserWithEmail = userRepository.findOneByEmailIgnoreCase(email);
         if (existingUserWithEmail.isPresent()) {
             // Tạo mã thông báo đặt lại mật khẩu
@@ -46,14 +47,14 @@ public class PasswordController {
 
             // Tạo đối tượng BaseResponse
             response.setMessage("Một email đã được gửi đến địa chỉ email của bạn. Vui lòng kiểm tra hộp thư đến của bạn.");
-            response.setStatusCode(HttpStatus.OK);
+            response.setStatusCode(200);
             response.setData(new HashMap<String, String>() {{
                 put("email", email);
                 put("token", token);
             }});
 
             // Trả về đối tượng BaseResponse
-
+            System.out.println(response);
             return ResponseEntity.ok(response);
         }else {
             response.setMessage("Email không tồn tại");
