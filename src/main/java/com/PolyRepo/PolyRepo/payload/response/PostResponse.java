@@ -9,20 +9,20 @@ public class PostResponse {
 
     private int countlike;
 
-    public int getCountlike() {
-        return countlike;
-    }
+//    public int getCountlike() {
+//        return countlike;
+//    }
 
-    public void setCountlike(int countlike) {
-        this.countlike = countlike;
-    }
+//    public void setCountlike(int countlike) {
+//        this.countlike = countlike;
+//    }
 
     private int categoryId;
     private String postStatus;
 
     private String filename;
-    private int countlike;
-
+//    private int countlike;
+//
     public String getFilename() {
         return filename;
     }

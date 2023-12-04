@@ -22,18 +22,18 @@ public class PostEntity {
     @Column(name="countlike")
     private int countlike;
 
-    public int getCountlike() {
-        return countlike;
-    }
+//    public int getCountlike() {
+//        return countlike;
+//    }
 
-    public void setCountlike(int countlike) {
-        this.countlike = countlike;
-    }
+//    public void setCountlike(int countlike) {
+//        this.countlike = countlike;
+//    }
 
     @Column(name="filename")
     private String filename;
-    @Column(name="countlike")
-    private int countlike;
+//    @Column(name="countlike")
+//    private int countlike;
 
     public String getFilename() {
         return filename;
