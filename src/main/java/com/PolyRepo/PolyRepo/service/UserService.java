@@ -101,7 +101,7 @@ public class UserService implements UserServiceImp {
     @Override
     public void deleteUserById(Integer id) {
         UserEntity userEntity = userRepository.findById(id)
-                .orElseThrow(() -> new CustomException("Không tìm thấy comment với ID: " + id));
+                .orElseThrow(() -> new CustomException("Không tìm thấy user với ID: " + id));
         userRepository.delete(userEntity);
     }
 
@@ -144,12 +144,11 @@ public class UserService implements UserServiceImp {
             if(existingUser.isPresent()) {
                 throw new CustomException("Email đã tồn tại");
             }
-
         }
+
         userEntity.setRole(roleEntity);
         userEntity.setUsername(userRequest.getName());
         userEntity.setEmail(userRequest.getEmail());
-        userEntity.setPasswords(passwordEncoder.encode(userRequest.getPassword()));
         UserEntity updatedUser = userRepository.save(userEntity);
 //<<<<<<< HEAD
 //        UserResponse userResponse = new UserResponse();
