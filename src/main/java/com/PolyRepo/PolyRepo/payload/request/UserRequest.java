@@ -5,7 +5,7 @@ public class UserRequest {
     private String name;
     private int roleId;
     private String email;
-    private  String password;
+
 
 
     public int getId() {
@@ -40,12 +40,6 @@ public class UserRequest {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
 }

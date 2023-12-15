@@ -54,7 +54,7 @@ public class UserController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteCommentById(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> deleteUserById(@PathVariable("id") Integer id) {
         BaseResponse baseResponse = new BaseResponse();
         try {
             userServiceImp.deleteUserById(id);
