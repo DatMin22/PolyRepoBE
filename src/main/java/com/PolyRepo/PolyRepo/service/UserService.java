@@ -131,10 +131,12 @@ public class UserService implements UserServiceImp {
 
         UserEntity userEntity = userRepository.findById(id)
                 .orElseThrow(() -> new CustomException("User not found"));
+        System.out.println("roleid:   "+ userRequest.getRoleId());
 
         RoleEntity roleEntity = roleRepository
                 .findById(userRequest.getRoleId())
                 .orElseThrow(() -> new CustomException("Role not found"));
+
         String currentEmail = userEntity.getEmail();
 
         if(!currentEmail.equals(userRequest.getEmail())) {
