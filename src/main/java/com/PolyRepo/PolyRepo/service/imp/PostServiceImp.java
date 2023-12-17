@@ -17,6 +17,8 @@ public interface PostServiceImp {
 
     PostResponse getPostById(Integer id);
     List<PostResponse> getPostByCateId(int id);
+
+    List<PostResponse> getPostByUserId(int id);
     void deletePostById(Integer id);
     List<PostResponse> searchByTitle(String title);
     PostResponse updatePost(Integer id, String title, String desc, String filename,int cateId);

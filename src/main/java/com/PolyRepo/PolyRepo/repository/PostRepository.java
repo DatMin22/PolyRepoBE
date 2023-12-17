@@ -20,6 +20,7 @@ import java.util.Optional;
 //=======
 public interface PostRepository extends JpaRepository<PostEntity,Integer> {
     List<PostEntity> findByCategoryId (int idCategory);
+    List<PostEntity> findByUserId(int userid);
 //    List<PostEntity> findById (int PostId);
 Optional<PostEntity> findById(Integer id);
     @Query("SELECT p FROM posts p WHERE LOWER(p.title) LIKE LOWER(CONCAT('%', :title, '%'))")
