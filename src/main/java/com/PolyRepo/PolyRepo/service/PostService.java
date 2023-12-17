@@ -185,4 +185,22 @@ public class PostService implements PostServiceImp {
         return responses;
     }
 
+    @Override
+    public List<PostResponse> getPostByUserId(int id) {
+        List<PostEntity>list=postRepository.findByUserId(id);
+        List<PostResponse> listResponse=new ArrayList<>();
+        for (PostEntity data: list){
+            PostResponse postResponse=new PostResponse();
+            postResponse.setId(data.getId());
+            postResponse.setTitle(data.getTitle());
+            postResponse.setDescription(data.getDescriptions());
+            postResponse.setUserId(data.getUser().getId());
+            postResponse.setCategoryId(data.getCategory().getId());
+            postResponse.setFilename(data.getFilename());
+            postResponse.setPostStatus(data.getPoststatus());
+            listResponse.add(postResponse);
+        }
+        return listResponse;
+    }
+
 }

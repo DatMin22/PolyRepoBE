@@ -101,5 +101,12 @@ public class PostController {
     public List<PostResponse> search(@RequestParam String title) {
         return postServiceImp.searchByTitle(title);
     }
+    @GetMapping("/user/{id}")
+    public ResponseEntity<?>getPostByUserId(@PathVariable int id){
+        BaseResponse response=new BaseResponse();
+        response.setStatusCode(200);
+        response.setData(postServiceImp.getPostByUserId(id));
 
+        return new ResponseEntity<>(response , HttpStatus.OK);
+    }
 }
