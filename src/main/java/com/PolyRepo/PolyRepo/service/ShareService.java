@@ -1,9 +1,6 @@
 package com.PolyRepo.PolyRepo.service;
 
-import com.PolyRepo.PolyRepo.Entity.PostEntity;
-import com.PolyRepo.PolyRepo.Entity.RoleEntity;
-import com.PolyRepo.PolyRepo.Entity.ShareEntity;
-import com.PolyRepo.PolyRepo.Entity.UserEntity;
+import com.PolyRepo.PolyRepo.Entity.*;
 import com.PolyRepo.PolyRepo.exception.CustomException;
 import com.PolyRepo.PolyRepo.payload.request.ShareRequest;
 import com.PolyRepo.PolyRepo.payload.request.SignupRequest;
@@ -40,10 +37,8 @@ public class ShareService implements ShareServiceImp {
                 share.setId(item.getId());
                 share.setUser_id(item.getUser().getId());
                 share.setPost_id(item.getPosts().getId());
-                share.setUser_id_getshare(item.getUserIdGetShare());
                 share.setShareStatus(item.getShareStatus());
                 share.setContent(item.getContent());
-                share.setLink(item.getLink());
                 listShare.add(share);
             }
             return listShare;
@@ -56,10 +51,8 @@ public class ShareService implements ShareServiceImp {
     public ShareResponse addShare(ShareRequest shareRequest) {
         try {
             ShareEntity shareEntity = new ShareEntity();
-            shareEntity.setUserIdGetShare(shareRequest.getUser_id_getshare());
             shareEntity.setShareStatus(shareRequest.getShareStatus());
             shareEntity.setContent(shareRequest.getContent());
-            shareEntity.setLink(shareRequest.getLink());
             // Tìm đối tượng PostEntity từ cơ sở dữ liệu
             PostEntity postEntity = postRepository.findById(shareRequest.getPost_id())
                     .orElseThrow(() -> new CustomException("Không tìm thấy bài viết với ID: " + shareRequest.getPost_id()));
@@ -76,16 +69,16 @@ public class ShareService implements ShareServiceImp {
             shareResponse.setId(savedShare.getId()); // Đặt giá trị cho thuộc tính id
             shareResponse.setPost_id(savedShare.getPosts().getId());
             shareResponse.setUser_id(savedShare.getUser().getId());
-            shareResponse.setUser_id_getshare(savedShare.getUserIdGetShare());
             shareResponse.setShareStatus(savedShare.getShareStatus());
             shareResponse.setContent(savedShare.getContent());
-            shareResponse.setLink(savedShare.getLink());
 
             return shareResponse;
         } catch (Exception e) {
             throw new CustomException("Lỗi add share" + e.getMessage());
         }
     }
+
+
 
     @Override
     public void deleteShareByID(Integer id) {
@@ -94,34 +87,28 @@ public class ShareService implements ShareServiceImp {
         shareRepository.delete(commentEntity);
     }
 
-//    @Override
-//    public ShareResponse updateShareByID(ShareRequest shareRequest) {
-//        try {
-//            ShareEntity shareEntity = new ShareEntity();
-//            shareEntity.setShareStatus(shareRequest.getShareStatus().booleanValue());
-//
-//            // Tìm đối tượng PostEntity từ cơ sở dữ liệu
-//            PostEntity postEntity = postRepository.findById(shareRequest.getPost_id())
-//                    .orElseThrow(() -> new CustomException("Không tìm thấy bài viết với ID: " + shareRequest.getPost_id()));
-//            shareEntity.setPosts(postEntity);
-//
-//            // Tìm đối tượng UserEntity từ cơ sở dữ liệu
-//            UserEntity userEntity = userRepository.findById(shareRequest.getUser_id())
-//                    .orElseThrow(() -> new CustomException("Không tìm thấy người dùng với ID: " + shareRequest.getUser_id()));
-//            shareEntity.setUser(userEntity);
-//
-//            ShareEntity savedShare = shareRepository.save(shareEntity);
-//
-//            ShareResponse shareResponse = new ShareResponse();
-//            shareResponse.setId(savedShare.getId()); // Đặt giá trị cho thuộc tính id
-//            shareResponse.setPost_id(savedShare.getPosts().getId());
-//            shareResponse.setUser_id(savedShare.getUser().getId());
-//            shareResponse.setShareStatus(savedShare.getShareStatus().booleanValue());
-//
-//            return shareResponse;
-//        } catch (Exception e) {
-//            throw new CustomException("Lỗi add share" + e.getMessage());
-//        }
-//    }
+    @Override
+    public ShareResponse updateShare(Integer id, String content) {
+        try {
+            ShareEntity shareEntity = shareRepository.findById(id)
+                    .orElseThrow(() -> new CustomException("Không tìm thấy comment với ID: " + id));
+
+            shareEntity.setContent(content); // Cập nhật nội dung mới
+            shareEntity.setId(id);
+
+            ShareEntity updatedShare = shareRepository.save(shareEntity);
+
+            ShareResponse shareResponse = new ShareResponse();
+            shareResponse.setId(updatedShare.getId());
+            shareResponse.setUser_id(updatedShare.getUser().getId());
+            shareResponse.setPost_id(updatedShare.getPosts().getId());
+            shareResponse.setShareStatus(updatedShare.getShareStatus());
+            shareResponse.setContent(updatedShare.getContent());
+
+            return shareResponse;
+        } catch (Exception e) {
+            throw new CustomException("Lỗi  " + e.getMessage());
+        }
+    }
 }
 

@@ -59,20 +59,9 @@ public class ShareController {
         }
     }
 
-//    @PostMapping("/update")
-//    public ResponseEntity<?> updateShareByID(@RequestBody ShareRequest shareRequest) {
-//        BaseResponse baseResponse = new BaseResponse();
-//        try {
-//            ShareResponse addedComment = shareServiceImp.addShare(shareRequest);
-//            baseResponse.setData(addedComment);
-//            baseResponse.setMessage("Share added successfully");
-//            baseResponse.setStatusCode(200);
-//            return new ResponseEntity<>(baseResponse, HttpStatus.OK);
-//        } catch (CustomException e) {
-//            baseResponse.setData(null);
-//            baseResponse.setMessage(e.getMessage());
-//            baseResponse.setStatusCode(400);
-//            return new ResponseEntity<>(baseResponse, HttpStatus.BAD_REQUEST);
-//        }
-//    }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<ShareResponse> updateComment(@PathVariable("id") Integer id, @RequestBody ShareRequest commentRequest) {
+        ShareResponse updatedComment = shareServiceImp.updateShare(id, commentRequest.getContent());
+        return ResponseEntity.ok(updatedComment);
+    }
 }

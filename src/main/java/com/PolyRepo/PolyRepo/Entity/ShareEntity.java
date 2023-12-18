@@ -21,14 +21,9 @@ public class ShareEntity {
     @Column(name="sharestatus")
     private String ShareStatus;
 
-    @Column(name="user_id_getshare")
-    private int UserIdGetShare;
-
     @Column(name="content")
     private String content;
 
-    @Column(name="link")
-    private String link;
     public ShareEntity() {
     }
 
@@ -38,14 +33,6 @@ public class ShareEntity {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
     }
 
     public int getId() {
@@ -80,11 +67,5 @@ public class ShareEntity {
         ShareStatus = shareStatus;
     }
 
-    public int getUserIdGetShare() {
-        return UserIdGetShare;
-    }
 
-    public void setUserIdGetShare(int userIdGetShare) {
-        UserIdGetShare = userIdGetShare;
-    }
 }
