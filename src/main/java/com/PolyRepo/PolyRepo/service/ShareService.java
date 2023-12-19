@@ -4,6 +4,7 @@ import com.PolyRepo.PolyRepo.Entity.*;
 import com.PolyRepo.PolyRepo.exception.CustomException;
 import com.PolyRepo.PolyRepo.payload.request.ShareRequest;
 import com.PolyRepo.PolyRepo.payload.request.SignupRequest;
+import com.PolyRepo.PolyRepo.payload.response.PostResponse;
 import com.PolyRepo.PolyRepo.payload.response.ShareResponse;
 import com.PolyRepo.PolyRepo.payload.response.UserResponse;
 import com.PolyRepo.PolyRepo.repository.PostRepository;
@@ -87,6 +88,8 @@ public class ShareService implements ShareServiceImp {
         shareRepository.delete(commentEntity);
     }
 
+//
+
     @Override
     public ShareResponse updateShare(Integer id, String content) {
         try {
@@ -109,6 +112,22 @@ public class ShareService implements ShareServiceImp {
         } catch (Exception e) {
             throw new CustomException("Lỗi  " + e.getMessage());
         }
+    }
+
+    @Override
+    public List<ShareResponse> getShareByUserId(int id) {
+        List<ShareEntity> list = shareRepository.findByUserId(id);
+        List<ShareResponse> listResponse = new ArrayList<>();
+        for (ShareEntity data : list) {
+            ShareResponse shareResponse = new ShareResponse();
+            shareResponse.setId(data.getId());
+            shareResponse.setContent(data.getContent());
+            shareResponse.setUser_id(data.getUser().getId());
+            shareResponse.setShareStatus(data.getShareStatus());
+            shareResponse.setPost_id(data.getPosts().getId());
+            listResponse.add(shareResponse);
+        }
+        return listResponse;
     }
 }
 
