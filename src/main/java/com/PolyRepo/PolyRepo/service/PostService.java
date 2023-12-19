@@ -35,35 +35,36 @@ public class PostService implements PostServiceImp {
             List<PostResponse> listPost = new ArrayList<>();
 
 
-            List<PostEntity> postEntityList = postRepository.findAll();
+            List<PostEntity> postEntityList = postRepository.findAllByPoststatus("True");
+
             for (PostEntity item : postEntityList) {
                 PostResponse post = new PostResponse();
                 post.setId(item.getId());
                 post.setDescription(item.getDescriptions());
-//                post.setPostStatus(item.getPoststatus());
                 post.setTitle(item.getTitle());
                 post.setUserId(item.getUser().getId());
 
                 post.setPostStatus(item.getPoststatus());
                 post.setCategoryId(item.getCategory().getId());
-                post.setPostStatus(item.getPoststatus());
                 post.setFilename(item.getFilename());
                 listPost.add(post);
             }
             return listPost;
         } catch (Exception e) {
-            throw new CustomException("Lỗi getallPost " + e.getMessage());
+            throw new CustomException("Lỗi  " + e.getMessage());
         }
     }
+
     @Override
     public void deletePostById(Integer id) {
         PostEntity post = postRepository.findById(id)
                 .orElseThrow(() -> new CustomException("Không tìm thấy post với ID: " + id));
-        postRepository.delete(post);
+        post.setPoststatus("False");
+        postRepository.save(post);
     }
 
     @Override
-    public PostResponse updatePost(Integer id, String title, String desc, String filename,int cateId) {
+    public PostResponse updatePost(Integer id, String title, String desc, String filename, int cateId) {
         try {
             PostEntity postEntity = postRepository.findById(id)
                     .orElseThrow(() -> new CustomException("Không tìm thấy post với ID: " + id));
@@ -100,7 +101,7 @@ public class PostService implements PostServiceImp {
             postEntity.setPoststatus("true");
             postEntity.setFilename(postRequest.getFilename());
             // Tìm đối tượng PostEntity từ cơ sở dữ liệu
-            CategoryEntity category= cateRepository.findById(postRequest.getCategory_id())
+            CategoryEntity category = cateRepository.findById(postRequest.getCategory_id())
                     .orElseThrow(() -> new CustomException("Không tìm thấy người dùng với ID: " + postRequest.getCategory_id()));
 
             postEntity.setCategory(category);
@@ -118,14 +119,13 @@ public class PostService implements PostServiceImp {
             postResponse.setFilename(savedPost.getFilename());
             postResponse.setCategoryId(savedPost.getCategory().getId());
             postResponse.setUserId(savedPost.getUser().getId());
-                return postResponse;
-            } catch (Exception e) {
-                throw new CustomException("Lỗi " + e.getMessage());
+            return postResponse;
+        } catch (Exception e) {
+            throw new CustomException("Lỗi " + e.getMessage());
 
-            }
+        }
 
     }
-
 
 
     @Override
@@ -146,10 +146,10 @@ public class PostService implements PostServiceImp {
 
     @Override
     public List<PostResponse> getPostByCateId(int id) {
-        List<PostEntity>list=postRepository.findByCategoryId(id);
-        List<PostResponse> listResponse=new ArrayList<>();
-        for (PostEntity data: list){
-            PostResponse postResponse=new PostResponse();
+        List<PostEntity> list = postRepository.findByCategoryId(id);
+        List<PostResponse> listResponse = new ArrayList<>();
+        for (PostEntity data : list) {
+            PostResponse postResponse = new PostResponse();
             postResponse.setId(data.getId());
             postResponse.setTitle(data.getTitle());
             postResponse.setDescription(data.getDescriptions());
@@ -165,11 +165,11 @@ public class PostService implements PostServiceImp {
 
     public List<PostResponse> searchByTitle(String title) {
 
-        List<PostEntity> posts = postRepository.findByTitleLike(title);
+        List<PostEntity> posts = postRepository.findByTitleLikeAndPoststatus(title, "true");
 
         List<PostResponse> responses = new ArrayList<>();
 
-        for(PostEntity post : posts) {
+        for (PostEntity post : posts) {
             PostResponse response = new PostResponse();
             response.setId(post.getId());
             response.setTitle(post.getTitle());
