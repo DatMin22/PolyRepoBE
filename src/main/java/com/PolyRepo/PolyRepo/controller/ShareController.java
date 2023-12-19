@@ -64,4 +64,13 @@ public class ShareController {
         ShareResponse updatedComment = shareServiceImp.updateShare(id, commentRequest.getContent());
         return ResponseEntity.ok(updatedComment);
     }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<?>getShareByUserId(@PathVariable int id){
+        BaseResponse response=new BaseResponse();
+        response.setStatusCode(200);
+        response.setData(shareServiceImp.getShareByUserId(id));
+
+        return new ResponseEntity<>(response , HttpStatus.OK);
+    }
 }
