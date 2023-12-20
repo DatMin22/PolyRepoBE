@@ -204,7 +204,7 @@ public class UserService implements UserServiceImp {
         }
         int minPasswordLength = 8; // Độ dài tối thiểu của mật khẩu
         if (newPassword.length() < minPasswordLength) {
-            throw new IllegalArgumentException("Mật khẩu mới phải có ít nhất " + minPasswordLength + " ký tự");
+            throw new InvalidPasswordException("Mật khẩu mới phải có ít nhất " + minPasswordLength + " ký tự");
         }
         String hashedNewPassword = passwordEncoder.encode(newPassword);
         user.setPasswords(hashedNewPassword);

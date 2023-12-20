@@ -35,13 +35,8 @@ public class PostEntity {
 //    @Column(name="countlike")
 //    private int countlike;
 
-    public String getFilename() {
-        return filename;
-    }
 
-    public void setFilename(String filename) {
-        this.filename = filename;
-    }
+
 
     @ManyToOne()
     @JoinColumn(name = "user_id")
@@ -56,13 +51,6 @@ public class PostEntity {
     @OneToMany(mappedBy ="posts")
     Set<ShareEntity> share;
 
-    public CategoryEntity getCategory() {
-        return category;
-    }
-
-    public void setCategory(CategoryEntity category) {
-        this.category = category;
-    }
 
     @OneToMany(mappedBy ="posts")
     Set<LikeEntity> like;
@@ -82,6 +70,20 @@ public class PostEntity {
         this.comments = comments;
         this.share = share;
         this.like = like;
+    }
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+    public CategoryEntity getCategory() {
+        return category;
+    }
+
+    public void setCategory(CategoryEntity category) {
+        this.category = category;
     }
 
     public int getId() {

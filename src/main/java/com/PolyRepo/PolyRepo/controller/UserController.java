@@ -1,6 +1,7 @@
 package com.PolyRepo.PolyRepo.controller;
 
 import com.PolyRepo.PolyRepo.exception.CustomException;
+import com.PolyRepo.PolyRepo.exception.InvalidPasswordException;
 import com.PolyRepo.PolyRepo.payload.request.PasswordChangeRequest;
 import com.PolyRepo.PolyRepo.payload.request.UserRequest;
 import com.PolyRepo.PolyRepo.payload.response.BaseResponse;
@@ -15,6 +16,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import java.util.List;
 
+import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -110,21 +116,31 @@ public class UserController {
     @PostMapping("/change-password")
     public ResponseEntity<?> changePassword(@RequestBody PasswordChangeRequest request,
                                             @RequestHeader("Authorization") String token) {
+
         BaseResponse response = new BaseResponse();
 
-        String email = jwtHelper.getUsernameFromToken(token);
-        if(email == null) {
-            throw new IllegalArgumentException("email is required");
+        try {
+            String email = jwtHelper.getUsernameFromToken(token);
+
+            userService.changePassword(email, request.getCurrentPassword(), request.getNewPassword());
+
+            response.setStatusCode(200);
+            response.setMessage("Đổi mật khẩu thành công");
+
+        } catch (UsernameNotFoundException e) {
+            response.setStatusCode(404);
+            response.setMessage(e.getMessage());
+
+        } catch (InvalidPasswordException e) {
+            response.setStatusCode(400);
+            response.setMessage(e.getMessage());
+
         }
-        userService.changePassword(
-                email,
-                request.getCurrentPassword(),
-                request.getNewPassword());
-        response.setStatusCode(200);
-        response.setMessage("Đổi mật khẩu thành công");
-        return new ResponseEntity<>(response, HttpStatus.OK);
+
+        return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatusCode()));
 
     }
+
 
 
 }
